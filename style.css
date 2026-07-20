@@ -1,0 +1,525 @@
+/* すべての部品のサイズ計算をそろえる */
+* {
+  box-sizing: border-box;
+}
+
+/* ページ全体 */
+body {
+  margin: 0;
+  padding: 20px;
+  font-family:
+    "Hiragino Kaku Gothic ProN",
+    "Yu Gothic",
+    Meiryo,
+    sans-serif;
+  color: #333;
+  background:
+    linear-gradient(
+      135deg,
+      #eaf6ff,
+      #fff7dc
+    );
+}
+
+/* アプリ本体 */
+.app {
+  width: 100%;
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 24px;
+  background-color: #ffffff;
+  border-radius: 24px;
+  box-shadow:
+    0 12px 30px
+    rgba(65, 90, 120, 0.15);
+}
+
+/* アプリタイトル */
+h1 {
+  margin: 0 0 24px;
+  text-align: center;
+  font-size: 32px;
+  color: #2673d9;
+}
+
+h2 {
+  margin: 0 0 16px;
+  font-size: 21px;
+  color: #333;
+}
+
+/* 現在の残高 */
+.wallet-balance {
+  margin-bottom: 20px;
+  padding: 24px;
+  text-align: center;
+  background:
+    linear-gradient(
+      135deg,
+      #dff8e7,
+      #effff3
+    );
+  border: 3px solid #42b96b;
+  border-radius: 20px;
+}
+
+.wallet-balance p {
+  margin: 0 0 8px;
+  font-size: 18px;
+  font-weight: bold;
+  color: #287a45;
+}
+
+#wallet-balance-total {
+  display: block;
+  font-size: 42px;
+  color: #16803b;
+}
+
+/* 月ごとのまとめ */
+.summary {
+  margin-bottom: 20px;
+  padding: 20px;
+  background-color: #fff7d5;
+  border-radius: 18px;
+}
+
+#summary-title {
+  text-align: center;
+  color: #795a00;
+}
+
+.summary p {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
+  margin: 12px 0;
+  font-size: 18px;
+}
+
+.summary strong {
+  font-size: 22px;
+}
+
+#received-total {
+  color: #148b47;
+}
+
+#spent-total {
+  color: #df5a45;
+}
+
+#balance-total {
+  color: #2673d9;
+}
+
+/* 各入力エリア共通 */
+.month-area,
+.chore-settings,
+.input-area,
+.expense-area,
+.records {
+  margin-bottom: 20px;
+  padding: 20px;
+  border-radius: 18px;
+}
+
+.month-area {
+  background-color: #eef6ff;
+}
+
+.chore-settings {
+  background-color: #ecfaef;
+}
+
+.input-area {
+  background-color: #eef6ff;
+}
+
+.expense-area {
+  background-color: #fff0ed;
+}
+
+.records {
+  background-color: #f4f4f4;
+}
+
+/* ラベル */
+label {
+  display: block;
+  margin: 15px 0 7px;
+  font-weight: bold;
+}
+
+/* 入力欄と選択欄 */
+input,
+select {
+  width: 100%;
+  min-height: 50px;
+  padding: 13px;
+  font-size: 17px;
+  color: #333;
+  background-color: #ffffff;
+  border: 2px solid #cbd8e8;
+  border-radius: 12px;
+}
+
+input:focus,
+select:focus {
+  border-color: #2673d9;
+  outline: none;
+  box-shadow:
+    0 0 0 3px
+    rgba(38, 115, 217, 0.12);
+}
+
+input[readonly] {
+  background-color: #f0f2f5;
+  color: #555;
+}
+
+/* 通常ボタン */
+button {
+  width: 100%;
+  min-height: 52px;
+  margin-top: 18px;
+  padding: 12px 16px;
+  font-size: 18px;
+  font-weight: bold;
+  color: #ffffff;
+  background-color: #2673d9;
+  border: none;
+  border-radius: 13px;
+  cursor: pointer;
+  transition:
+    transform 0.15s,
+    background-color 0.15s;
+}
+
+button:hover {
+  background-color: #195eb7;
+}
+
+button:active {
+  transform: scale(0.98);
+}
+
+/* お手伝い追加ボタン */
+#add-chore-button {
+  background-color: #2fa95b;
+}
+
+#add-chore-button:hover {
+  background-color: #238947;
+}
+
+/* 支出記録ボタン */
+#expense-button {
+  background-color: #ef7d42;
+}
+
+#expense-button:hover {
+  background-color: #d8642c;
+}
+
+/* リスト共通 */
+#chore-settings-list,
+#record-list {
+  margin: 18px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* お手伝い設定一覧 */
+.chore-setting-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 10px;
+  padding: 13px;
+  background-color: #ffffff;
+  border-left: 6px solid #2fa95b;
+  border-radius: 12px;
+}
+
+.chore-setting-item span {
+  font-weight: bold;
+}
+
+.chore-setting-buttons {
+  display: flex;
+  gap: 7px;
+}
+
+/* 設定一覧の小さいボタン */
+.edit-chore-button,
+.remove-chore-button {
+  width: auto;
+  min-height: 38px;
+  margin: 0;
+  padding: 8px 11px;
+  font-size: 13px;
+}
+
+.edit-chore-button {
+  background-color: #e9a222;
+}
+
+.edit-chore-button:hover {
+  background-color: #c98712;
+}
+
+.remove-chore-button {
+  background-color: #e25454;
+}
+
+.remove-chore-button:hover {
+  background-color: #bd3e3e;
+}
+
+/* 記録一覧 */
+#record-list li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 10px;
+  padding: 14px;
+  background-color: #ffffff;
+  border-radius: 12px;
+}
+
+.income-record {
+  border-left: 6px solid #2fa95b;
+}
+
+.expense-record {
+  border-left: 6px solid #ef7d42;
+}
+
+/* 記録削除ボタン */
+.delete-button {
+  width: auto;
+  min-width: 60px;
+  min-height: 38px;
+  margin: 0;
+  padding: 8px 12px;
+  font-size: 14px;
+  background-color: #e25454;
+}
+
+.delete-button:hover {
+  background-color: #bd3e3e;
+}
+
+/* 記録がないとき */
+.empty-message,
+.chore-empty-message {
+  display: block !important;
+  padding: 14px;
+  text-align: center;
+  color: #777;
+  border-left: 6px solid #bbb;
+}
+
+/* スマホ表示 */
+@media screen and (max-width: 600px) {
+  body {
+    padding: 10px;
+  }
+
+  .app {
+    padding: 16px;
+    border-radius: 18px;
+  }
+
+  h1 {
+    font-size: 27px;
+  }
+
+  h2 {
+    font-size: 19px;
+  }
+
+  #wallet-balance-total {
+    font-size: 36px;
+  }
+
+  .summary p {
+    font-size: 16px;
+  }
+
+  .summary strong {
+    font-size: 19px;
+  }
+
+  .month-area,
+  .chore-settings,
+  .input-area,
+  .expense-area,
+  .records {
+    padding: 16px;
+  }
+
+  .chore-setting-item {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .chore-setting-buttons {
+    width: 100%;
+  }
+
+  .chore-setting-buttons button {
+    flex: 1;
+  }
+
+  #record-list li {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .delete-button {
+    width: 100%;
+  }
+}
+
+.budget-message {
+  display: block !important;
+  margin-top: 14px !important;
+  padding: 10px;
+  text-align: center;
+  font-size: 15px !important;
+  font-weight: bold;
+  background-color: white;
+  border-radius: 10px;
+}
+
+.budget-safe {
+  color: #18894b;
+}
+
+.budget-warning {
+  color: #e27800;
+}
+
+.budget-over {
+  color: #d83232;
+}
+
+.category-summary {
+  margin-bottom: 20px;
+  padding: 20px;
+  background-color: #fff8e8;
+  border-radius: 18px;
+}
+
+#category-summary-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.category-summary-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
+  margin-top: 10px;
+  padding: 13px;
+  background-color: #ffffff;
+  border-left: 6px solid #ef9b32;
+  border-radius: 12px;
+}
+
+.category-summary-item strong {
+  color: #d97016;
+  font-size: 18px;
+}
+
+.category-empty-message {
+  padding: 14px;
+  text-align: center;
+  color: #777;
+  background-color: #ffffff;
+  border-radius: 12px;
+}
+.category-summary-item {
+  display: block;
+}
+
+.category-summary-text {
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  align-items: center;
+  gap: 12px;
+}
+
+.category-percentage {
+  min-width: 45px;
+  text-align: right;
+  font-weight: bold;
+  color: #8a621e;
+}
+
+.category-bar-area {
+  width: 100%;
+  height: 14px;
+  margin-top: 10px;
+  overflow: hidden;
+  background-color: #eeeeee;
+  border-radius: 20px;
+}
+
+.category-bar {
+  height: 100%;
+  min-width: 2px;
+  background-color: #ef9b32;
+  border-radius: 20px;
+  transition: width 0.3s;
+}
+
+.data-area {
+  margin-bottom: 20px;
+  padding: 20px;
+  background-color: #f1efff;
+  border-radius: 18px;
+}
+
+.data-description {
+  color: #666;
+  line-height: 1.6;
+}
+
+#export-data-button {
+  background-color: #7257c7;
+}
+
+#export-data-button:hover {
+  background-color: #5940aa;
+}
+
+#import-data-input {
+  display: none;
+}
+
+.import-data-label {
+  display: block;
+  width: 100%;
+  min-height: 52px;
+  margin-top: 12px;
+  padding: 14px 16px;
+  text-align: center;
+  font-size: 18px;
+  font-weight: bold;
+  color: #ffffff;
+  background-color: #5682c5;
+  border-radius: 13px;
+  cursor: pointer;
+}
+
+.import-data-label:hover {
+  background-color: #3e68aa;
+}
