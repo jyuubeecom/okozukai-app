@@ -1,110 +1,183 @@
+// =====================================
+// おこづかいメモ
+// Service Worker
+// Ver. 0.10.1
+// =====================================
+
 const CACHE_NAME =
-  "okozukai-cache-v1";
+  "okozukai-cache-v0.10.1";
 
 const CACHE_FILES = [
   "./",
   "./index.html",
-  "./style.css",
-  "./script.js",
-  "./manifest.json",
-  "./icon.svg"
+  "./style.css?v=0.10.1",
+  "./script.js?v=0.10.1",
+  "./manifest.json?v=0.10.1",
+  "./icon.svg?v=0.10.1"
 ];
 
-// アプリに必要なファイルを保存する
+// -------------------------
+// インストール
+// -------------------------
+
 self.addEventListener(
   "install",
   function (event) {
     event.waitUntil(
       caches
-        .open(CACHE_NAME)
-        .then(function (cache) {
-          return cache.addAll(
-            CACHE_FILES
-          );
-        })
+        .open(
+          CACHE_NAME
+        )
+        .then(
+          function (cache) {
+            return cache.addAll(
+              CACHE_FILES
+            );
+          }
+        )
     );
 
     self.skipWaiting();
   }
 );
 
-// 古いキャッシュを削除する
+// -------------------------
+// 古いキャッシュ削除
+// -------------------------
+
 self.addEventListener(
   "activate",
   function (event) {
     event.waitUntil(
       caches
         .keys()
-        .then(function (cacheNames) {
-          return Promise.all(
-            cacheNames.map(
-              function (cacheName) {
-                if (
-                  cacheName !==
-                  CACHE_NAME
+        .then(
+          function (
+            cacheNames
+          ) {
+            return Promise.all(
+              cacheNames.map(
+                function (
+                  cacheName
                 ) {
-                  return caches.delete(
-                    cacheName
-                  );
+                  if (
+                    cacheName !==
+                    CACHE_NAME
+                  ) {
+                    return caches.delete(
+                      cacheName
+                    );
+                  }
                 }
-              }
-            )
-          );
-        })
+              )
+            );
+          }
+        )
     );
 
     self.clients.claim();
   }
 );
 
-// 通信できるときは最新データを使い、
-// 通信できないときは保存済みデータを使う
+// -------------------------
+// ファイル読み込み
+// -------------------------
+
 self.addEventListener(
   "fetch",
   function (event) {
+    const request =
+      event.request;
+
     if (
-      event.request.method !== "GET"
+      request.method !==
+      "GET"
     ) {
       return;
     }
 
-    event.respondWith(
-      fetch(event.request)
-        .then(function (response) {
-          const responseCopy =
-            response.clone();
+    const requestUrl =
+      new URL(
+        request.url
+      );
 
-          caches
-            .open(CACHE_NAME)
-            .then(function (cache) {
-              cache.put(
-                event.request,
-                responseCopy
-              );
-            });
+    if (
+      requestUrl.origin !==
+      self.location.origin
+    ) {
+      return;
+    }
 
-          return response;
-        })
-        .catch(function () {
-          return caches
-            .match(event.request)
-            .then(function (
-              cachedResponse
+    // ページ本体
+    if (
+      request.mode ===
+      "navigate"
+    ) {
+      event.respondWith(
+        fetch(
+          request
+        )
+          .then(
+            function (
+              response
             ) {
-              if (cachedResponse) {
-                return cachedResponse;
-              }
+              return response;
+            }
+          )
+          .catch(
+            function () {
+              return caches.match(
+                "./index.html"
+              );
+            }
+          )
+      );
 
-              if (
-                event.request.mode ===
-                "navigate"
-              ) {
-                return caches.match(
-                  "./index.html"
+      return;
+    }
+
+    // CSS・JSなど
+    event.respondWith(
+      fetch(
+        request
+      )
+        .then(
+          function (
+            response
+          ) {
+            if (
+              response &&
+              response.ok
+            ) {
+              const copy =
+                response.clone();
+
+              caches
+                .open(
+                  CACHE_NAME
+                )
+                .then(
+                  function (
+                    cache
+                  ) {
+                    cache.put(
+                      request,
+                      copy
+                    );
+                  }
                 );
-              }
-            });
-        })
+            }
+
+            return response;
+          }
+        )
+        .catch(
+          function () {
+            return caches.match(
+              request
+            );
+          }
+        )
     );
   }
 );

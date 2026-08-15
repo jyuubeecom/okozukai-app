@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="ja">
+
 <head>
   <meta charset="UTF-8">
 
@@ -17,25 +18,27 @@
 
   <link
     rel="stylesheet"
-    href="style.css"
+    href="./style.css?v=0.10.1"
   >
 
   <link
     rel="manifest"
-    href="manifest.json"
+    href="./manifest.json?v=0.10.1"
   >
 </head>
 
 <body>
+
   <main class="app">
 
     <h1>おこづかいメモ</h1>
 
     <p class="app-version">
-      Ver. 0.10.0 ｜ 2026/08/15
+      Ver. 0.10.1 ｜ 2026/08/15
     </p>
 
     <section class="wallet-balance">
+
       <p>
         いま持っているお金
       </p>
@@ -43,9 +46,11 @@
       <strong id="wallet-balance-total">
         0円
       </strong>
+
     </section>
 
     <section class="summary">
+
       <h2 id="summary-title">
         今月のまとめ
       </h2>
@@ -91,9 +96,11 @@
           0円
         </strong>
       </p>
+
     </section>
 
     <section class="month-area">
+
       <label for="month-select">
         表示する月
       </label>
@@ -102,9 +109,11 @@
         id="month-select"
         type="month"
       >
+
     </section>
 
     <section class="budget-area">
+
       <h2>
         今月の予算設定
       </h2>
@@ -123,9 +132,11 @@
       <button id="save-budget-button">
         予算を保存する
       </button>
+
     </section>
 
     <section class="chore-settings">
+
       <h2>
         お手伝い設定
       </h2>
@@ -155,11 +166,12 @@
         お手伝いを追加する
       </button>
 
-      <ul id="chore-settings-list">
-      </ul>
+      <ul id="chore-settings-list"></ul>
+
     </section>
 
     <section class="input-area">
+
       <h2>
         お手伝いを記録する
       </h2>
@@ -197,9 +209,11 @@
       <button id="record-button">
         記録する
       </button>
+
     </section>
 
     <section class="expense-area">
+
       <h2>
         使ったお金を記録する
       </h2>
@@ -230,6 +244,7 @@
       </label>
 
       <select id="expense-category">
+
         <option value="">
           カテゴリを選んでください
         </option>
@@ -253,6 +268,7 @@
         <option value="その他">
           その他
         </option>
+
       </select>
 
       <label for="expense-date">
@@ -267,18 +283,21 @@
       <button id="expense-button">
         支出を記録する
       </button>
+
     </section>
 
     <section class="category-summary">
+
       <h2>
         カテゴリ別の支出
       </h2>
 
-      <ul id="category-summary-list">
-      </ul>
+      <ul id="category-summary-list"></ul>
+
     </section>
 
     <section class="data-area">
+
       <h2>
         データ管理
       </h2>
@@ -303,15 +322,17 @@
         type="file"
         accept=".json,application/json"
       >
+
     </section>
 
     <section class="records">
+
       <h2>
         記録一覧
       </h2>
 
-      <ul id="record-list">
-      </ul>
+      <ul id="record-list"></ul>
+
     </section>
 
   </main>
@@ -321,7 +342,11 @@
     id="edit-record-modal"
     class="edit-modal is-hidden"
     aria-hidden="true"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="edit-modal-title"
   >
+
     <div class="edit-modal-card">
 
       <h2 id="edit-modal-title">
@@ -348,11 +373,13 @@
       >
 
       <div id="edit-category-area">
+
         <label for="edit-record-category">
           カテゴリ
         </label>
 
         <select id="edit-record-category">
+
           <option value="おかし">
             おかし
           </option>
@@ -372,7 +399,9 @@
           <option value="その他">
             その他
           </option>
+
         </select>
+
       </div>
 
       <label for="edit-record-date">
@@ -385,6 +414,7 @@
       >
 
       <div class="edit-modal-buttons">
+
         <button
           id="save-edit-button"
           type="button"
@@ -398,34 +428,41 @@
         >
           キャンセル
         </button>
+
       </div>
 
     </div>
+
   </div>
 
-  <script src="script.js"></script>
+  <script src="./script.js?v=0.10.1"></script>
 
   <script>
     if ("serviceWorker" in navigator) {
       window.addEventListener(
         "load",
-        function () {
-          navigator.serviceWorker
-            .register(
-              "./service-worker.js"
-            )
-            .catch(
-              function (error) {
-                console.error(
-                  "Service Workerの登録に失敗しました",
-                  error
-                );
-              }
+        async function () {
+          try {
+            const registration =
+              await navigator.serviceWorker.register(
+                "./service-worker.js?v=0.10.1",
+                {
+                  updateViaCache: "none"
+                }
+              );
+
+            registration.update();
+          } catch (error) {
+            console.error(
+              "Service Workerの登録に失敗しました",
+              error
             );
+          }
         }
       );
     }
   </script>
 
 </body>
+
 </html>

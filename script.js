@@ -1,9 +1,12 @@
-// ==============================
+// =====================================
 // おこづかいメモ
-// Ver. 0.10.0
-// ==============================
+// Ver. 0.10.1
+// =====================================
 
-// お手伝い設定
+// -------------------------
+// HTML部品
+// -------------------------
+
 const choreNameInput =
   document.getElementById("chore-name");
 
@@ -18,7 +21,6 @@ const choreSettingsList =
     "chore-settings-list"
   );
 
-// お手伝い入力
 const choreSelect =
   document.getElementById("chore-select");
 
@@ -31,7 +33,6 @@ const recordButton =
 const choreDateInput =
   document.getElementById("chore-date");
 
-// 支出入力
 const expenseAmountInput =
   document.getElementById(
     "expense-amount"
@@ -57,13 +58,11 @@ const expenseDateInput =
     "expense-date"
   );
 
-// 月
 const monthSelect =
   document.getElementById(
     "month-select"
   );
 
-// 予算
 const budgetAmountInput =
   document.getElementById(
     "budget-amount"
@@ -74,7 +73,6 @@ const saveBudgetButton =
     "save-budget-button"
   );
 
-// 表示
 const summaryTitle =
   document.getElementById(
     "summary-title"
@@ -125,7 +123,6 @@ const walletBalanceTotal =
     "wallet-balance-total"
   );
 
-// データ管理
 const exportDataButton =
   document.getElementById(
     "export-data-button"
@@ -184,7 +181,10 @@ const cancelEditButton =
 
 let editingRecordId = null;
 
-// 最初のお手伝い
+// -------------------------
+// 初期お手伝い
+// -------------------------
+
 const defaultChores = [
   {
     id: "default-1",
@@ -208,10 +208,37 @@ const defaultChores = [
   }
 ];
 
-// 保存データ読み込み
+// -------------------------
+// localStorage読み込み
+// -------------------------
+
+function loadJson(
+  key,
+  fallback
+) {
+  try {
+    const text =
+      localStorage.getItem(key);
+
+    if (!text) {
+      return fallback;
+    }
+
+    return JSON.parse(text);
+  } catch (error) {
+    console.error(
+      `${key}の読み込みに失敗しました`,
+      error
+    );
+
+    return fallback;
+  }
+}
+
 const savedChores =
-  JSON.parse(
-    localStorage.getItem("chores")
+  loadJson(
+    "chores",
+    null
   );
 
 let chores =
@@ -219,13 +246,16 @@ let chores =
     ? savedChores
     : defaultChores.map(
         function (chore) {
-          return { ...chore };
+          return {
+            ...chore
+          };
         }
       );
 
 const savedRecords =
-  JSON.parse(
-    localStorage.getItem("records")
+  loadJson(
+    "records",
+    []
   );
 
 let records =
@@ -234,20 +264,28 @@ let records =
     : [];
 
 const savedBudgets =
-  JSON.parse(
-    localStorage.getItem("budgets")
+  loadJson(
+    "budgets",
+    {}
   );
 
 let budgets =
   savedBudgets &&
-  typeof savedBudgets === "object" &&
-  !Array.isArray(savedBudgets)
+  typeof savedBudgets ===
+    "object" &&
+  !Array.isArray(
+    savedBudgets
+  )
     ? savedBudgets
     : {};
 
-// 今日
+// -------------------------
+// 日付
+// -------------------------
+
 function getToday() {
-  const today = new Date();
+  const today =
+    new Date();
 
   const year =
     today.getFullYear();
@@ -255,22 +293,36 @@ function getToday() {
   const month =
     String(
       today.getMonth() + 1
-    ).padStart(2, "0");
+    ).padStart(
+      2,
+      "0"
+    );
 
   const day =
     String(
       today.getDate()
-    ).padStart(2, "0");
+    ).padStart(
+      2,
+      "0"
+    );
 
-  return `${year}-${month}-${day}`;
+  return (
+    `${year}-${month}-${day}`
+  );
 }
 
-// 今月
 function getCurrentMonth() {
-  return getToday().slice(0, 7);
+  return (
+    getToday().slice(
+      0,
+      7
+    )
+  );
 }
 
-function formatDate(dateText) {
+function formatDate(
+  dateText
+) {
   const parts =
     dateText.split("-");
 
@@ -280,7 +332,9 @@ function formatDate(dateText) {
   );
 }
 
-function formatMonth(monthText) {
+function formatMonth(
+  monthText
+) {
   const parts =
     monthText.split("-");
 
@@ -297,7 +351,16 @@ function getSelectedMonth() {
   );
 }
 
-function isValidDate(dateText) {
+function isValidDate(
+  dateText
+) {
+  if (
+    typeof dateText !==
+    "string"
+  ) {
+    return false;
+  }
+
   if (
     !/^\d{4}-\d{2}-\d{2}$/.test(
       dateText
@@ -326,20 +389,30 @@ function isValidDate(dateText) {
     );
 
   return (
-    date.getFullYear() === year &&
-    date.getMonth() === month - 1 &&
-    date.getDate() === day
+    date.getFullYear() ===
+      year &&
+    date.getMonth() ===
+      month - 1 &&
+    date.getDate() ===
+      day
   );
 }
 
+// -------------------------
 // 古い記録を整える
+// -------------------------
+
 function normalizeRecords(
   recordArray
 ) {
   return recordArray.map(
-    function (record, index) {
+    function (
+      record,
+      index
+    ) {
       const type =
-        record.type === "expense"
+        record.type ===
+        "expense"
           ? "expense"
           : "income";
 
@@ -347,8 +420,10 @@ function normalizeRecords(
         ...record,
 
         id:
-          record.id !== undefined &&
-          record.id !== null
+          record.id !==
+            undefined &&
+          record.id !==
+            null
             ? record.id
             : (
                 "old-" +
@@ -360,20 +435,28 @@ function normalizeRecords(
         type: type,
 
         amount:
-          Number(record.amount) || 0,
+          Number(
+            record.amount
+          ) || 0,
 
         content:
           String(
-            record.content || ""
+            record.content ||
+            ""
           ),
 
         date:
-          isValidDate(record.date)
+          isValidDate(
+            record.date
+          )
             ? record.date
             : getToday()
       };
 
-      if (type === "expense") {
+      if (
+        type ===
+        "expense"
+      ) {
         normalized.category =
           record.category ||
           "その他";
@@ -385,36 +468,53 @@ function normalizeRecords(
 }
 
 records =
-  normalizeRecords(records);
+  normalizeRecords(
+    records
+  );
 
+// -------------------------
 // 保存
+// -------------------------
+
 function saveChores() {
   localStorage.setItem(
     "chores",
-    JSON.stringify(chores)
+    JSON.stringify(
+      chores
+    )
   );
 }
 
 function saveRecords() {
   localStorage.setItem(
     "records",
-    JSON.stringify(records)
+    JSON.stringify(
+      records
+    )
   );
 }
 
 function saveBudgets() {
   localStorage.setItem(
     "budgets",
-    JSON.stringify(budgets)
+    JSON.stringify(
+      budgets
+    )
   );
 }
 
+// -------------------------
 // 予算
+// -------------------------
+
 function getSelectedBudget() {
+  const selectedMonth =
+    getSelectedMonth();
+
   return (
     Number(
       budgets[
-        getSelectedMonth()
+        selectedMonth
       ]
     ) || 0
   );
@@ -424,22 +524,32 @@ function displayBudgetInput() {
   const budget =
     getSelectedBudget();
 
-  budgetAmountInput.value =
+  if (
     budget > 0
-      ? budget
-      : "";
+  ) {
+    budgetAmountInput.value =
+      budget;
+  } else {
+    budgetAmountInput.value =
+      "";
+  }
 }
 
-// お手伝い選択
+// -------------------------
+// お手伝い設定
+// -------------------------
+
 function displayChoreOptions() {
-  choreSelect.innerHTML = "";
+  choreSelect.innerHTML =
+    "";
 
   const firstOption =
     document.createElement(
       "option"
     );
 
-  firstOption.value = "";
+  firstOption.value =
+    "";
 
   firstOption.textContent =
     "お手伝いを選んでください";
@@ -456,7 +566,9 @@ function displayChoreOptions() {
         );
 
       option.value =
-        String(chore.id);
+        String(
+          chore.id
+        );
 
       option.textContent =
         `${chore.name}　` +
@@ -468,7 +580,9 @@ function displayChoreOptions() {
         chore.name;
 
       option.dataset.amount =
-        String(chore.amount);
+        String(
+          chore.amount
+        );
 
       choreSelect.appendChild(
         option
@@ -477,12 +591,13 @@ function displayChoreOptions() {
   );
 }
 
-// お手伝い設定
 function displayChoreSettings() {
   choreSettingsList.innerHTML =
     "";
 
-  if (chores.length === 0) {
+  if (
+    chores.length === 0
+  ) {
     const emptyMessage =
       document.createElement(
         "li"
@@ -567,7 +682,8 @@ function displayChoreSettings() {
             );
 
           if (
-            newAmountText === null
+            newAmountText ===
+            null
           ) {
             return;
           }
@@ -594,7 +710,9 @@ function displayChoreSettings() {
             newAmount;
 
           saveChores();
+
           displayChoreOptions();
+
           displayChoreSettings();
         }
       );
@@ -607,7 +725,9 @@ function displayChoreSettings() {
               `${chore.name}を設定から削除しますか？\n過去の記録は残ります。`
             );
 
-          if (!shouldDelete) {
+          if (
+            !shouldDelete
+          ) {
             return;
           }
 
@@ -622,7 +742,9 @@ function displayChoreSettings() {
             );
 
           saveChores();
+
           displayChoreOptions();
+
           displayChoreSettings();
         }
       );
@@ -650,16 +772,21 @@ function displayChoreSettings() {
   );
 }
 
+// -------------------------
 // 残高
+// -------------------------
+
 function calculateWalletBalance(
   excludeRecordId = null
 ) {
-  let walletBalance = 0;
+  let walletBalance =
+    0;
 
   records.forEach(
     function (record) {
       if (
-        excludeRecordId !== null &&
+        excludeRecordId !==
+          null &&
         record.id ===
           excludeRecordId
       ) {
@@ -667,18 +794,24 @@ function calculateWalletBalance(
       }
 
       const amount =
-        Number(record.amount) || 0;
+        Number(
+          record.amount
+        ) || 0;
 
       if (
-        record.type === "income"
+        record.type ===
+        "income"
       ) {
-        walletBalance += amount;
+        walletBalance +=
+          amount;
       }
 
       if (
-        record.type === "expense"
+        record.type ===
+        "expense"
       ) {
-        walletBalance -= amount;
+        walletBalance -=
+          amount;
       }
     }
   );
@@ -686,15 +819,22 @@ function calculateWalletBalance(
   return walletBalance;
 }
 
-function isSelectedMonth(record) {
+function isSelectedMonth(
+  record
+) {
   return (
+    typeof record.date ===
+      "string" &&
     record.date.startsWith(
       getSelectedMonth()
     )
   );
 }
 
+// -------------------------
 // カテゴリ別支出
+// -------------------------
+
 function displayCategorySummary() {
   categorySummaryList.innerHTML =
     "";
@@ -702,12 +842,15 @@ function displayCategorySummary() {
   const selectedMonth =
     getSelectedMonth();
 
-  const categoryTotals = {};
+  const categoryTotals =
+    {};
 
   records.forEach(
     function (record) {
       if (
-        record.type !== "expense" ||
+        record.type !==
+          "expense" ||
+        !record.date ||
         !record.date.startsWith(
           selectedMonth
         )
@@ -720,7 +863,9 @@ function displayCategorySummary() {
         "その他";
 
       const amount =
-        Number(record.amount) || 0;
+        Number(
+          record.amount
+        ) || 0;
 
       if (
         !categoryTotals[
@@ -744,7 +889,8 @@ function displayCategorySummary() {
     );
 
   if (
-    categories.length === 0
+    categories.length ===
+    0
   ) {
     const emptyMessage =
       document.createElement(
@@ -766,7 +912,10 @@ function displayCategorySummary() {
   }
 
   categories.sort(
-    function (a, b) {
+    function (
+      a,
+      b
+    ) {
       return (
         categoryTotals[b] -
         categoryTotals[a]
@@ -783,7 +932,8 @@ function displayCategorySummary() {
         amount
       ) {
         return (
-          total + amount
+          total +
+          amount
         );
       },
       0
@@ -819,13 +969,17 @@ function displayCategorySummary() {
         ].toLocaleString()}円`;
 
       const percentage =
-        Math.round(
-          categoryTotals[
-            category
-          ] /
-          totalExpense *
-          100
-        );
+        totalExpense > 0
+          ? Math.round(
+              (
+                categoryTotals[
+                  category
+                ] /
+                totalExpense
+              ) *
+              100
+            )
+          : 0;
 
       const percentageText =
         document.createElement(
@@ -900,10 +1054,16 @@ function displayCategorySummary() {
   );
 }
 
+// -------------------------
 // 合計
+// -------------------------
+
 function updateTotal() {
-  let incomeTotal = 0;
-  let expenseTotal = 0;
+  let incomeTotal =
+    0;
+
+  let expenseTotal =
+    0;
 
   const selectedMonth =
     getSelectedMonth();
@@ -911,6 +1071,7 @@ function updateTotal() {
   records.forEach(
     function (record) {
       if (
+        !record.date ||
         !record.date.startsWith(
           selectedMonth
         )
@@ -919,18 +1080,24 @@ function updateTotal() {
       }
 
       const amount =
-        Number(record.amount) || 0;
+        Number(
+          record.amount
+        ) || 0;
 
       if (
-        record.type === "income"
+        record.type ===
+        "income"
       ) {
-        incomeTotal += amount;
+        incomeTotal +=
+          amount;
       }
 
       if (
-        record.type === "expense"
+        record.type ===
+        "expense"
       ) {
-        expenseTotal += amount;
+        expenseTotal +=
+          amount;
       }
     }
   );
@@ -967,7 +1134,9 @@ function updateTotal() {
     "budget-over"
   );
 
-  if (budget === 0) {
+  if (
+    budget === 0
+  ) {
     budgetMessage.textContent =
       "今月の予算を設定してみよう";
 
@@ -1020,12 +1189,19 @@ function updateTotal() {
 
 function refreshScreen() {
   displayBudgetInput();
+
   displayRecords();
+
   updateTotal();
 }
 
-// 編集画面を開く
-function openEditModal(record) {
+// -------------------------
+// 記録編集画面
+// -------------------------
+
+function openEditModal(
+  record
+) {
   editingRecordId =
     record.id;
 
@@ -1039,7 +1215,8 @@ function openEditModal(record) {
     record.date;
 
   if (
-    record.type === "expense"
+    record.type ===
+    "expense"
   ) {
     editModalTitle.textContent =
       "使ったお金を編集";
@@ -1081,9 +1258,9 @@ function openEditModal(record) {
   );
 }
 
-// 編集画面を閉じる
 function closeEditModal() {
-  editingRecordId = null;
+  editingRecordId =
+    null;
 
   editRecordModal.classList.add(
     "is-hidden"
@@ -1099,7 +1276,6 @@ function closeEditModal() {
   );
 }
 
-// 編集内容を保存
 function saveEditedRecord() {
   const record =
     records.find(
@@ -1111,8 +1287,11 @@ function saveEditedRecord() {
       }
     );
 
-  if (!record) {
+  if (
+    !record
+  ) {
     closeEditModal();
+
     return;
   }
 
@@ -1141,7 +1320,8 @@ function saveEditedRecord() {
   }
 
   if (
-    newContent === ""
+    newContent ===
+    ""
   ) {
     alert(
       "内容を入力してください"
@@ -1163,11 +1343,9 @@ function saveEditedRecord() {
   }
 
   if (
-    record.type === "expense"
+    record.type ===
+    "expense"
   ) {
-    const newCategory =
-      editRecordCategory.value;
-
     const availableMoney =
       calculateWalletBalance(
         record.id
@@ -1185,7 +1363,7 @@ function saveEditedRecord() {
     }
 
     record.category =
-      newCategory;
+      editRecordCategory.value;
   } else {
     const balanceWithoutRecord =
       calculateWalletBalance(
@@ -1194,7 +1372,7 @@ function saveEditedRecord() {
 
     if (
       balanceWithoutRecord +
-      newAmount <
+        newAmount <
       0
     ) {
       alert(
@@ -1217,9 +1395,13 @@ function saveEditedRecord() {
   saveRecords();
 
   monthSelect.value =
-    newDate.slice(0, 7);
+    newDate.slice(
+      0,
+      7
+    );
 
   closeEditModal();
+
   refreshScreen();
 
   alert(
@@ -1227,9 +1409,13 @@ function saveEditedRecord() {
   );
 }
 
+// -------------------------
 // 記録一覧
+// -------------------------
+
 function displayRecords() {
-  recordList.innerHTML = "";
+  recordList.innerHTML =
+    "";
 
   const selectedRecords =
     records.filter(
@@ -1237,7 +1423,8 @@ function displayRecords() {
     );
 
   if (
-    selectedRecords.length === 0
+    selectedRecords.length ===
+    0
   ) {
     const emptyMessage =
       document.createElement(
@@ -1286,7 +1473,8 @@ function displayRecords() {
         );
 
       if (
-        record.type === "income"
+        record.type ===
+        "income"
       ) {
         recordText.textContent =
           `${displayDate}　` +
@@ -1301,7 +1489,8 @@ function displayRecords() {
       }
 
       if (
-        record.type === "expense"
+        record.type ===
+        "expense"
       ) {
         recordText.textContent =
           `${displayDate}　` +
@@ -1347,7 +1536,9 @@ function displayRecords() {
               "この記録を削除しますか？"
             );
 
-          if (!shouldDelete) {
+          if (
+            !shouldDelete
+          ) {
             return;
           }
 
@@ -1362,6 +1553,7 @@ function displayRecords() {
             );
 
           saveRecords();
+
           refreshScreen();
         }
       );
@@ -1385,7 +1577,10 @@ function displayRecords() {
   );
 }
 
-// 編集ボタン
+// -------------------------
+// 編集画面イベント
+// -------------------------
+
 saveEditButton.addEventListener(
   "click",
   saveEditedRecord
@@ -1412,7 +1607,8 @@ document.addEventListener(
   "keydown",
   function (event) {
     if (
-      event.key === "Escape" &&
+      event.key ===
+        "Escape" &&
       !editRecordModal.classList.contains(
         "is-hidden"
       )
@@ -1422,21 +1618,30 @@ document.addEventListener(
   }
 );
 
+// -------------------------
 // データ書き出し
+// -------------------------
+
 exportDataButton.addEventListener(
   "click",
   function () {
     const exportData = {
-      version: 2,
+      version: 3,
+
+      appVersion:
+        "0.10.1",
 
       exportedAt:
         new Date().toISOString(),
 
-      chores: chores,
+      chores:
+        chores,
 
-      records: records,
+      records:
+        records,
 
-      budgets: budgets
+      budgets:
+        budgets
     };
 
     const jsonText =
@@ -1489,14 +1694,19 @@ exportDataButton.addEventListener(
   }
 );
 
+// -------------------------
 // データ読み込み
+// -------------------------
+
 importDataInput.addEventListener(
   "change",
   function () {
     const selectedFile =
       importDataInput.files[0];
 
-    if (!selectedFile) {
+    if (
+      !selectedFile
+    ) {
       return;
     }
 
@@ -1520,6 +1730,7 @@ importDataInput.addEventListener(
             !Array.isArray(
               importedData.records
             ) ||
+            !importedData.budgets ||
             typeof importedData.budgets !==
               "object" ||
             Array.isArray(
@@ -1536,7 +1747,9 @@ importDataInput.addEventListener(
               "現在のデータを、読み込んだデータに置き換えますか？"
             );
 
-          if (!shouldImport) {
+          if (
+            !shouldImport
+          ) {
             importDataInput.value =
               "";
 
@@ -1552,15 +1765,18 @@ importDataInput.addEventListener(
             );
 
           budgets =
-            importedData.budgets ||
-            {};
+            importedData.budgets;
 
           saveChores();
+
           saveRecords();
+
           saveBudgets();
 
           displayChoreOptions();
+
           displayChoreSettings();
+
           refreshScreen();
 
           alert(
@@ -1587,7 +1803,10 @@ importDataInput.addEventListener(
   }
 );
 
+// -------------------------
 // お手伝い設定追加
+// -------------------------
+
 addChoreButton.addEventListener(
   "click",
   function () {
@@ -1623,7 +1842,9 @@ addChoreButton.addEventListener(
         }
       );
 
-    if (alreadyExists) {
+    if (
+      alreadyExists
+    ) {
       alert(
         "同じ名前のお手伝いがすでにあります"
       );
@@ -1632,9 +1853,14 @@ addChoreButton.addEventListener(
     }
 
     const newChore = {
-      id: Date.now(),
-      name: name,
-      amount: amount
+      id:
+        Date.now(),
+
+      name:
+        name,
+
+      amount:
+        amount
     };
 
     chores.push(
@@ -1642,7 +1868,9 @@ addChoreButton.addEventListener(
     );
 
     saveChores();
+
     displayChoreOptions();
+
     displayChoreSettings();
 
     choreSelect.value =
@@ -1663,7 +1891,10 @@ addChoreButton.addEventListener(
   }
 );
 
+// -------------------------
 // お手伝い選択
+// -------------------------
+
 choreSelect.addEventListener(
   "change",
   function () {
@@ -1674,17 +1905,24 @@ choreSelect.addEventListener(
 
     amountInput.value =
       selectedOption.dataset
-        .amount || "";
+        .amount ||
+      "";
   }
 );
 
+// -------------------------
 // 月変更
+// -------------------------
+
 monthSelect.addEventListener(
   "change",
   refreshScreen
 );
 
+// -------------------------
 // 予算保存
+// -------------------------
+
 saveBudgetButton.addEventListener(
   "click",
   function () {
@@ -1709,10 +1947,12 @@ saveBudgetButton.addEventListener(
     const selectedMonth =
       getSelectedMonth();
 
-    budgets[selectedMonth] =
-      amount;
+    budgets[
+      selectedMonth
+    ] = amount;
 
     saveBudgets();
+
     updateTotal();
 
     alert(
@@ -1723,7 +1963,10 @@ saveBudgetButton.addEventListener(
   }
 );
 
+// -------------------------
 // お手伝い記録
+// -------------------------
+
 recordButton.addEventListener(
   "click",
   function () {
@@ -1746,10 +1989,12 @@ recordButton.addEventListener(
       choreDateInput.value;
 
     if (
-      choreSelect.value === "" ||
+      choreSelect.value ===
+        "" ||
       amount <= 0 ||
       !content ||
-      recordDate === ""
+      recordDate ===
+        ""
     ) {
       alert(
         "お手伝いと日付を選んでください"
@@ -1759,11 +2004,20 @@ recordButton.addEventListener(
     }
 
     const newRecord = {
-      id: Date.now(),
-      type: "income",
-      amount: amount,
-      content: content,
-      date: recordDate
+      id:
+        Date.now(),
+
+      type:
+        "income",
+
+      amount:
+        amount,
+
+      content:
+        content,
+
+      date:
+        recordDate
     };
 
     records.push(
@@ -1793,7 +2047,10 @@ recordButton.addEventListener(
   }
 );
 
+// -------------------------
 // 支出記録
+// -------------------------
+
 expenseButton.addEventListener(
   "click",
   function () {
@@ -1842,12 +2099,23 @@ expenseButton.addEventListener(
     }
 
     const newRecord = {
-      id: Date.now(),
-      type: "expense",
-      amount: amount,
-      content: content,
-      category: category,
-      date: recordDate
+      id:
+        Date.now(),
+
+      type:
+        "expense",
+
+      amount:
+        amount,
+
+      content:
+        content,
+
+      category:
+        category,
+
+      date:
+        recordDate
     };
 
     records.push(
@@ -1880,7 +2148,10 @@ expenseButton.addEventListener(
   }
 );
 
+// -------------------------
 // 初期表示
+// -------------------------
+
 monthSelect.value =
   getCurrentMonth();
 
@@ -1891,9 +2162,13 @@ expenseDateInput.value =
   getToday();
 
 saveChores();
+
 saveRecords();
+
 saveBudgets();
 
 displayChoreOptions();
+
 displayChoreSettings();
+
 refreshScreen();

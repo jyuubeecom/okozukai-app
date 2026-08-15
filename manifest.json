@@ -1,20 +1,22 @@
 {
   "name": "おこづかいメモ",
   "short_name": "おこづかい",
+  "id": "./",
   "start_url": "./",
+  "scope": "./",
   "display": "standalone",
   "background_color": "#fff8e8",
   "theme_color": "#ef9b32",
   "lang": "ja",
   "icons": [
     {
-      "src": "icon.svg",
+      "src": "./icon.svg?v=0.10.1",
       "sizes": "any",
       "type": "image/svg+xml",
       "purpose": "any"
     },
     {
-      "src": "icon.svg",
+      "src": "./icon.svg?v=0.10.1",
       "sizes": "any",
       "type": "image/svg+xml",
       "purpose": "maskable"
