@@ -3,28 +3,13 @@
 
 <head>
   <meta charset="UTF-8">
-
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
-  >
-
-  <meta
-    name="theme-color"
-    content="#ef9b32"
-  >
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#ef9b32">
 
   <title>おこづかいメモ</title>
 
-  <link
-    rel="stylesheet"
-    href="./style.css?v=0.12.0"
-  >
-
-  <link
-    rel="manifest"
-    href="./manifest.json?v=0.12.0"
-  >
+  <link rel="stylesheet" href="./style.css?v=0.12.2">
+  <link rel="manifest" href="./manifest.json?v=0.12.2">
 </head>
 
 <body>
@@ -34,44 +19,28 @@
     <h1>おこづかいメモ</h1>
 
     <p class="app-version">
-      Ver. 0.12.0 ｜ 2026/08/15
+      Ver. 0.12.2 ｜ 2026/08/15
     </p>
 
-    <!-- 画面切り替え -->
+    <!-- メニュー -->
     <nav class="main-nav">
 
-      <button
-        class="nav-button active"
-        data-page="home"
-        type="button"
-      >
+      <button class="nav-button active" data-page="home" type="button">
         🏠
         <span>ホーム</span>
       </button>
 
-      <button
-        class="nav-button"
-        data-page="record"
-        type="button"
-      >
+      <button class="nav-button" data-page="record" type="button">
         ✏️
         <span>記録する</span>
       </button>
 
-      <button
-        class="nav-button"
-        data-page="settings"
-        type="button"
-      >
+      <button class="nav-button" data-page="settings" type="button">
         ⚙️
         <span>設定</span>
       </button>
 
-      <button
-        class="nav-button"
-        data-page="data"
-        type="button"
-      >
+      <button class="nav-button" data-page="data" type="button">
         💾
         <span>データ</span>
       </button>
@@ -79,88 +48,54 @@
     </nav>
 
 
-    <!-- ===================== -->
-    <!-- ホーム -->
-    <!-- ===================== -->
-
-    <div
-      id="page-home"
-      class="app-page active"
-    >
+    <!-- =========================
+         ホーム
+    ========================== -->
+    <div id="page-home" class="app-page active">
 
       <section class="wallet-balance">
-
-        <p>
-          いま持っているお金
-        </p>
-
-        <strong id="wallet-balance-total">
-          0円
-        </strong>
-
+        <p>いま持っているお金</p>
+        <strong id="wallet-balance-total">0円</strong>
       </section>
 
 
       <section class="month-area">
-
-        <label for="month-select">
-          表示する月
-        </label>
-
-        <input
-          id="month-select"
-          type="month"
-        >
-
+        <label for="month-select">表示する月</label>
+        <input id="month-select" type="month">
       </section>
 
 
       <section class="summary">
 
-        <h2 id="summary-title">
-          今月のまとめ
-        </h2>
+        <h2 id="summary-title">今月のまとめ</h2>
 
         <p>
           もらった金額：
-          <strong id="received-total">
-            0円
-          </strong>
+          <strong id="received-total">0円</strong>
         </p>
 
         <p>
           つかった金額：
-          <strong id="spent-total">
-            0円
-          </strong>
+          <strong id="spent-total">0円</strong>
         </p>
 
         <p>
           今月の予算：
-          <strong id="budget-total">
-            0円
-          </strong>
+          <strong id="budget-total">0円</strong>
         </p>
 
         <p>
           あと使える金額：
-          <strong id="remaining-budget-total">
-            0円
-          </strong>
+          <strong id="remaining-budget-total">0円</strong>
         </p>
 
-        <p
-          id="budget-message"
-          class="budget-message"
-        >
+        <p id="budget-message" class="budget-message">
           予算を設定してみよう
         </p>
 
         <p>
           のこり：
-          <strong id="balance-total">
-            0円
-          </strong>
+          <strong id="balance-total">0円</strong>
         </p>
 
       </section>
@@ -168,54 +103,29 @@
 
       <section class="savings-goal">
 
-        <h2>
-          貯金目標 🎯
-        </h2>
+        <h2>貯金目標 🎯</h2>
 
         <div class="savings-status">
 
-          <p
-            id="savings-goal-title"
-            class="savings-goal-title"
-          >
+          <p id="savings-goal-title" class="savings-goal-title">
             目標を設定してみよう
           </p>
 
           <div class="savings-amount-display">
-
-            <strong id="savings-saved-amount">
-              0円
-            </strong>
-
-            <span>
-              /
-            </span>
-
-            <span id="savings-target-amount">
-              0円
-            </span>
-
+            <strong id="savings-saved-amount">0円</strong>
+            <span> / </span>
+            <span id="savings-target-amount">0円</span>
           </div>
 
           <div class="savings-bar-area">
-
-            <div
-              id="savings-progress-bar"
-              class="savings-progress-bar"
-            >
-            </div>
-
+            <div id="savings-progress-bar" class="savings-progress-bar"></div>
           </div>
 
-          <p
-            id="savings-progress-text"
-            class="savings-progress-text"
-          >
+          <p id="savings-progress-text" class="savings-progress-text">
             「貯金」で記録するとここにたまります
           </p>
 
         </div>
-
 
         <label for="savings-goal-name">
           何のために貯金する？
@@ -226,7 +136,6 @@
           type="text"
           placeholder="例：ゲーム"
         >
-
 
         <label for="savings-goal-amount">
           目標金額
@@ -239,28 +148,20 @@
           placeholder="例：5000"
         >
 
-
         <div class="savings-goal-buttons">
 
-          <button
-            id="save-savings-goal-button"
-            type="button"
-          >
+          <button id="save-savings-goal-button" type="button">
             目標を保存する
           </button>
 
-          <button
-            id="clear-savings-goal-button"
-            type="button"
-          >
+          <button id="clear-savings-goal-button" type="button">
             目標をやめる
           </button>
 
         </div>
 
         <p class="savings-help">
-          使ったお金を記録するときに
-          「貯金」を選ぶと、
+          使ったお金を記録するときに「貯金」を選ぶと、
           貯金額として加算されます。
         </p>
 
@@ -268,46 +169,31 @@
 
 
       <section class="category-summary">
-
-        <h2>
-          カテゴリ別の支出
-        </h2>
-
-        <ul id="category-summary-list">
-        </ul>
-
+        <h2>カテゴリ別の支出</h2>
+        <ul id="category-summary-list"></ul>
       </section>
 
     </div>
 
 
-    <!-- ===================== -->
-    <!-- 記録する -->
-    <!-- ===================== -->
-
-    <div
-      id="page-record"
-      class="app-page"
-    >
+    <!-- =========================
+         記録する
+    ========================== -->
+    <div id="page-record" class="app-page">
 
       <section class="input-area">
 
-        <h2>
-          お手伝いを記録する
-        </h2>
+        <h2>お手伝いを記録する</h2>
 
         <label for="chore-select">
           お手伝いした内容
         </label>
 
         <select id="chore-select">
-
           <option value="">
             お手伝いを選んでください
           </option>
-
         </select>
-
 
         <label for="amount">
           もらえる金額
@@ -320,16 +206,11 @@
           placeholder="お手伝いを選ぶと表示されます"
         >
 
-
         <label for="chore-date">
           お手伝いした日
         </label>
 
-        <input
-          id="chore-date"
-          type="date"
-        >
-
+        <input id="chore-date" type="date">
 
         <button id="record-button">
           記録する
@@ -340,9 +221,7 @@
 
       <section class="expense-area">
 
-        <h2>
-          使ったお金を記録する
-        </h2>
+        <h2>使ったお金を記録する</h2>
 
         <label for="expense-amount">
           金額
@@ -355,7 +234,6 @@
           placeholder="例：120"
         >
 
-
         <label for="expense-content">
           使った内容
         </label>
@@ -366,49 +244,24 @@
           placeholder="例：ジュース"
         >
 
-
         <label for="expense-category">
           カテゴリ
         </label>
 
         <select id="expense-category">
-
-          <option value="">
-            カテゴリを選んでください
-          </option>
-
-          <option value="おかし">
-            おかし
-          </option>
-
-          <option value="文房具">
-            文房具
-          </option>
-
-          <option value="ゲーム">
-            ゲーム
-          </option>
-
-          <option value="貯金">
-            貯金
-          </option>
-
-          <option value="その他">
-            その他
-          </option>
-
+          <option value="">カテゴリを選んでください</option>
+          <option value="おかし">おかし</option>
+          <option value="文房具">文房具</option>
+          <option value="ゲーム">ゲーム</option>
+          <option value="貯金">貯金</option>
+          <option value="その他">その他</option>
         </select>
-
 
         <label for="expense-date">
           使った日
         </label>
 
-        <input
-          id="expense-date"
-          type="date"
-        >
-
+        <input id="expense-date" type="date">
 
         <button id="expense-button">
           支出を記録する
@@ -418,37 +271,24 @@
 
 
       <section class="records">
-
-        <h2>
-          記録一覧
-        </h2>
-
-        <ul id="record-list">
-        </ul>
-
+        <h2>記録一覧</h2>
+        <ul id="record-list"></ul>
       </section>
 
     </div>
 
 
-    <!-- ===================== -->
-    <!-- 設定 -->
-    <!-- ===================== -->
-
-    <div
-      id="page-settings"
-      class="app-page"
-    >
+    <!-- =========================
+         設定
+    ========================== -->
+    <div id="page-settings" class="app-page">
 
       <section class="budget-area">
 
-        <h2>
-          今月の予算設定
-        </h2>
+        <h2>今月の予算設定</h2>
 
         <p class="setting-description">
-          ホームで選択している月の
-          予算を設定します。
+          ホームで選択している月の予算を設定します。
         </p>
 
         <label for="budget-amount">
@@ -471,9 +311,7 @@
 
       <section class="chore-settings">
 
-        <h2>
-          お手伝い設定
-        </h2>
+        <h2>お手伝い設定</h2>
 
         <label for="chore-name">
           お手伝いの名前
@@ -484,7 +322,6 @@
           type="text"
           placeholder="例：洗たくものをたたむ"
         >
-
 
         <label for="chore-amount">
           もらえる金額
@@ -497,45 +334,34 @@
           placeholder="例：80"
         >
 
-
         <button id="add-chore-button">
           お手伝いを追加する
         </button>
 
-
-        <ul id="chore-settings-list">
-        </ul>
+        <ul id="chore-settings-list"></ul>
 
       </section>
 
     </div>
 
 
-    <!-- ===================== -->
-    <!-- データ -->
-    <!-- ===================== -->
-
-    <div
-      id="page-data"
-      class="app-page"
-    >
+    <!-- =========================
+         データ
+    ========================== -->
+    <div id="page-data" class="app-page">
 
       <section class="data-area">
 
-        <h2>
-          データ管理
-        </h2>
+        <h2>データ管理</h2>
 
         <p class="data-description">
-          記録・予算・お手伝い設定・
-          貯金目標をファイルに保存できます。
+          記録・予算・お手伝い設定・貯金目標を
+          ファイルに保存できます。
         </p>
-
 
         <button id="export-data-button">
           データを書き出す
         </button>
-
 
         <label
           for="import-data-input"
@@ -543,7 +369,6 @@
         >
           データを読み込む
         </label>
-
 
         <input
           id="import-data-input"
@@ -558,10 +383,9 @@
   </main>
 
 
-  <!-- ===================== -->
-  <!-- 記録編集画面 -->
-  <!-- ===================== -->
-
+  <!-- =========================
+       記録編集画面
+  ========================== -->
   <div
     id="edit-record-modal"
     class="edit-modal is-hidden"
@@ -577,7 +401,6 @@
         記録を編集
       </h2>
 
-
       <label for="edit-record-amount">
         金額
       </label>
@@ -588,7 +411,6 @@
         min="1"
       >
 
-
       <label for="edit-record-content">
         内容
       </label>
@@ -598,7 +420,6 @@
         type="text"
       >
 
-
       <div id="edit-category-area">
 
         <label for="edit-record-category">
@@ -606,31 +427,14 @@
         </label>
 
         <select id="edit-record-category">
-
-          <option value="おかし">
-            おかし
-          </option>
-
-          <option value="文房具">
-            文房具
-          </option>
-
-          <option value="ゲーム">
-            ゲーム
-          </option>
-
-          <option value="貯金">
-            貯金
-          </option>
-
-          <option value="その他">
-            その他
-          </option>
-
+          <option value="おかし">おかし</option>
+          <option value="文房具">文房具</option>
+          <option value="ゲーム">ゲーム</option>
+          <option value="貯金">貯金</option>
+          <option value="その他">その他</option>
         </select>
 
       </div>
-
 
       <label for="edit-record-date">
         日付
@@ -640,7 +444,6 @@
         id="edit-record-date"
         type="date"
       >
-
 
       <div class="edit-modal-buttons">
 
@@ -665,13 +468,10 @@
   </div>
 
 
-  <script src="./script.js?v=0.12.0"></script>
+  <script src="./script.js?v=0.12.2"></script>
 
   <script>
-
-    if (
-      "serviceWorker" in navigator
-    ) {
+    if ("serviceWorker" in navigator) {
 
       window.addEventListener(
         "load",
@@ -680,15 +480,12 @@
           try {
 
             const registration =
-              await navigator
-                .serviceWorker
-                .register(
-                  "./service-worker.js?v=0.12.0",
-                  {
-                    updateViaCache:
-                      "none"
-                  }
-                );
+              await navigator.serviceWorker.register(
+                "./service-worker.js?v=0.12.2",
+                {
+                  updateViaCache: "none"
+                }
+              );
 
             registration.update();
 
@@ -705,7 +502,6 @@
       );
 
     }
-
   </script>
 
 </body>

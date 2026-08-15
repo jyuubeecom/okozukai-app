@@ -1,19 +1,19 @@
 // =====================================
 // おこづかいメモ
 // Service Worker
-// Ver. 0.12.0
+// Ver. 0.12.2
 // =====================================
 
 const CACHE_NAME =
-  "okozukai-cache-v0.12.0";
+  "okozukai-cache-v0.12.2";
 
 const CACHE_FILES = [
   "./",
   "./index.html",
-  "./style.css?v=0.12.0",
-  "./script.js?v=0.12.0",
-  "./manifest.json?v=0.12.0",
-  "./icon.svg?v=0.12.0"
+  "./style.css?v=0.12.2",
+  "./script.js?v=0.12.2",
+  "./manifest.json?v=0.12.2",
+  "./icon.svg?v=0.12.2"
 ];
 
 
@@ -27,9 +27,7 @@ self.addEventListener(
 
     event.waitUntil(
       caches
-        .open(
-          CACHE_NAME
-        )
+        .open(CACHE_NAME)
         .then(
           function (cache) {
 
@@ -48,7 +46,7 @@ self.addEventListener(
 
 
 // =====================================
-// 古いキャッシュを削除
+// 古いキャッシュ削除
 // =====================================
 
 self.addEventListener(
@@ -103,12 +101,9 @@ self.addEventListener(
 
 
     if (
-      request.method !==
-      "GET"
+      request.method !== "GET"
     ) {
-
       return;
-
     }
 
 
@@ -122,26 +117,19 @@ self.addEventListener(
       requestUrl.origin !==
       self.location.origin
     ) {
-
       return;
-
     }
 
 
-    // -------------------------
-    // HTMLページ
-    // -------------------------
-
+    // ページ本体
     if (
-      request.mode ===
-      "navigate"
+      request.mode === "navigate"
     ) {
 
       event.respondWith(
 
-        fetch(
-          request
-        )
+        fetch(request)
+
           .then(
             function (response) {
 
@@ -149,6 +137,7 @@ self.addEventListener(
 
             }
           )
+
           .catch(
             function () {
 
@@ -162,19 +151,14 @@ self.addEventListener(
       );
 
       return;
-
     }
 
 
-    // -------------------------
-    // CSS・JavaScript・画像など
-    // -------------------------
-
+    // CSS・JS・画像など
     event.respondWith(
 
-      fetch(
-        request
-      )
+      fetch(request)
+
         .then(
           function (response) {
 
@@ -183,20 +167,19 @@ self.addEventListener(
               response.ok
             ) {
 
-              const responseCopy =
+              const copy =
                 response.clone();
 
 
               caches
-                .open(
-                  CACHE_NAME
-                )
+                .open(CACHE_NAME)
+
                 .then(
                   function (cache) {
 
                     cache.put(
                       request,
-                      responseCopy
+                      copy
                     );
 
                   }
@@ -209,6 +192,7 @@ self.addEventListener(
 
           }
         )
+
         .catch(
           function () {
 

@@ -1,7 +1,11 @@
 // =====================================
 // おこづかいメモ
-// Ver. 0.12.0
+// Ver. 0.12.2
 // =====================================
+
+const $ = function (id) {
+  return document.getElementById(id);
+};
 
 
 // =====================================
@@ -9,65 +13,46 @@
 // =====================================
 
 const navButtons =
-  document.querySelectorAll(
-    ".nav-button"
-  );
+  document.querySelectorAll(".nav-button");
 
 const appPages =
-  document.querySelectorAll(
-    ".app-page"
-  );
+  document.querySelectorAll(".app-page");
 
 
-function switchPage(
-  pageName
-) {
+function switchPage(pageName) {
 
-  navButtons.forEach(
-    function (button) {
+  navButtons.forEach(function (button) {
 
-      const isActive =
-        button.dataset.page ===
-        pageName;
+    const active =
+      button.dataset.page === pageName;
 
-      button.classList.toggle(
-        "active",
-        isActive
+    button.classList.toggle(
+      "active",
+      active
+    );
+
+    if (active) {
+      button.setAttribute(
+        "aria-current",
+        "page"
       );
-
-      if (isActive) {
-
-        button.setAttribute(
-          "aria-current",
-          "page"
-        );
-
-      } else {
-
-        button.removeAttribute(
-          "aria-current"
-        );
-
-      }
-
-    }
-  );
-
-
-  appPages.forEach(
-    function (page) {
-
-      const isActive =
-        page.id ===
-        `page-${pageName}`;
-
-      page.classList.toggle(
-        "active",
-        isActive
+    } else {
+      button.removeAttribute(
+        "aria-current"
       );
-
     }
-  );
+
+  });
+
+
+  appPages.forEach(function (page) {
+
+    page.classList.toggle(
+      "active",
+      page.id === `page-${pageName}`
+    );
+
+  });
 
 
   window.scrollTo({
@@ -78,22 +63,63 @@ function switchPage(
 }
 
 
-navButtons.forEach(
-  function (button) {
+navButtons.forEach(function (button) {
 
-    button.addEventListener(
-      "click",
-      function () {
+  button.addEventListener(
+    "click",
+    function () {
 
-        switchPage(
-          button.dataset.page
-        );
+      switchPage(
+        button.dataset.page
+      );
 
-      }
-    );
+    }
+  );
 
+});
+
+
+// =====================================
+// 記録一覧へ移動
+// =====================================
+
+function scrollToRecordList() {
+
+  const recordsSection =
+    document.querySelector(".records");
+
+  const mainNav =
+    document.querySelector(".main-nav");
+
+  if (!recordsSection) {
+    return;
   }
-);
+
+
+  setTimeout(function () {
+
+    const navHeight =
+      mainNav
+        ? mainNav.offsetHeight
+        : 0;
+
+    const position =
+      recordsSection
+        .getBoundingClientRect()
+        .top +
+      window.scrollY -
+      navHeight -
+      20;
+
+
+    window.scrollTo({
+      top: position,
+      behavior: "smooth"
+    });
+
+  }, 100);
+
+}
 
 
 // =====================================
@@ -101,149 +127,93 @@ navButtons.forEach(
 // =====================================
 
 const choreNameInput =
-  document.getElementById(
-    "chore-name"
-  );
+  $("chore-name");
 
 const choreAmountInput =
-  document.getElementById(
-    "chore-amount"
-  );
+  $("chore-amount");
 
 const addChoreButton =
-  document.getElementById(
-    "add-chore-button"
-  );
+  $("add-chore-button");
 
 const choreSettingsList =
-  document.getElementById(
-    "chore-settings-list"
-  );
+  $("chore-settings-list");
 
 const choreSelect =
-  document.getElementById(
-    "chore-select"
-  );
+  $("chore-select");
 
 const amountInput =
-  document.getElementById(
-    "amount"
-  );
+  $("amount");
 
 const recordButton =
-  document.getElementById(
-    "record-button"
-  );
+  $("record-button");
 
 const choreDateInput =
-  document.getElementById(
-    "chore-date"
-  );
+  $("chore-date");
 
 
 const expenseAmountInput =
-  document.getElementById(
-    "expense-amount"
-  );
+  $("expense-amount");
 
 const expenseContentInput =
-  document.getElementById(
-    "expense-content"
-  );
+  $("expense-content");
 
 const expenseCategorySelect =
-  document.getElementById(
-    "expense-category"
-  );
+  $("expense-category");
 
 const expenseButton =
-  document.getElementById(
-    "expense-button"
-  );
+  $("expense-button");
 
 const expenseDateInput =
-  document.getElementById(
-    "expense-date"
-  );
+  $("expense-date");
 
 
 const monthSelect =
-  document.getElementById(
-    "month-select"
-  );
+  $("month-select");
 
 const budgetAmountInput =
-  document.getElementById(
-    "budget-amount"
-  );
+  $("budget-amount");
 
 const saveBudgetButton =
-  document.getElementById(
-    "save-budget-button"
-  );
+  $("save-budget-button");
 
 
 const summaryTitle =
-  document.getElementById(
-    "summary-title"
-  );
+  $("summary-title");
 
 const recordList =
-  document.getElementById(
-    "record-list"
-  );
+  $("record-list");
 
 const categorySummaryList =
-  document.getElementById(
-    "category-summary-list"
-  );
+  $("category-summary-list");
 
 
 const receivedTotal =
-  document.getElementById(
-    "received-total"
-  );
+  $("received-total");
 
 const spentTotal =
-  document.getElementById(
-    "spent-total"
-  );
+  $("spent-total");
 
 const balanceTotal =
-  document.getElementById(
-    "balance-total"
-  );
+  $("balance-total");
 
 const budgetTotal =
-  document.getElementById(
-    "budget-total"
-  );
+  $("budget-total");
 
 const remainingBudgetTotal =
-  document.getElementById(
-    "remaining-budget-total"
-  );
+  $("remaining-budget-total");
 
 const budgetMessage =
-  document.getElementById(
-    "budget-message"
-  );
+  $("budget-message");
 
 const walletBalanceTotal =
-  document.getElementById(
-    "wallet-balance-total"
-  );
+  $("wallet-balance-total");
 
 
 const exportDataButton =
-  document.getElementById(
-    "export-data-button"
-  );
+  $("export-data-button");
 
 const importDataInput =
-  document.getElementById(
-    "import-data-input"
-  );
+  $("import-data-input");
 
 
 // =====================================
@@ -251,107 +221,70 @@ const importDataInput =
 // =====================================
 
 const savingsGoalNameInput =
-  document.getElementById(
-    "savings-goal-name"
-  );
+  $("savings-goal-name");
 
 const savingsGoalAmountInput =
-  document.getElementById(
-    "savings-goal-amount"
-  );
+  $("savings-goal-amount");
 
 const saveSavingsGoalButton =
-  document.getElementById(
-    "save-savings-goal-button"
-  );
+  $("save-savings-goal-button");
 
 const clearSavingsGoalButton =
-  document.getElementById(
-    "clear-savings-goal-button"
-  );
+  $("clear-savings-goal-button");
 
 const savingsGoalTitle =
-  document.getElementById(
-    "savings-goal-title"
-  );
+  $("savings-goal-title");
 
 const savingsSavedAmount =
-  document.getElementById(
-    "savings-saved-amount"
-  );
+  $("savings-saved-amount");
 
 const savingsTargetAmount =
-  document.getElementById(
-    "savings-target-amount"
-  );
+  $("savings-target-amount");
 
 const savingsProgressBar =
-  document.getElementById(
-    "savings-progress-bar"
-  );
+  $("savings-progress-bar");
 
 const savingsProgressText =
-  document.getElementById(
-    "savings-progress-text"
-  );
+  $("savings-progress-text");
 
 
 // =====================================
-// 記録編集画面
+// 編集画面
 // =====================================
 
 const editRecordModal =
-  document.getElementById(
-    "edit-record-modal"
-  );
+  $("edit-record-modal");
 
 const editModalTitle =
-  document.getElementById(
-    "edit-modal-title"
-  );
+  $("edit-modal-title");
 
 const editRecordAmount =
-  document.getElementById(
-    "edit-record-amount"
-  );
+  $("edit-record-amount");
 
 const editRecordContent =
-  document.getElementById(
-    "edit-record-content"
-  );
+  $("edit-record-content");
 
 const editCategoryArea =
-  document.getElementById(
-    "edit-category-area"
-  );
+  $("edit-category-area");
 
 const editRecordCategory =
-  document.getElementById(
-    "edit-record-category"
-  );
+  $("edit-record-category");
 
 const editRecordDate =
-  document.getElementById(
-    "edit-record-date"
-  );
+  $("edit-record-date");
 
 const saveEditButton =
-  document.getElementById(
-    "save-edit-button"
-  );
+  $("save-edit-button");
 
 const cancelEditButton =
-  document.getElementById(
-    "cancel-edit-button"
-  );
+  $("cancel-edit-button");
 
 
-let editingRecordId =
-  null;
+let editingRecordId = null;
 
 
 // =====================================
-// 最初のお手伝い
+// 初期お手伝い
 // =====================================
 
 const defaultChores = [
@@ -395,20 +328,13 @@ function loadJson(
   try {
 
     const text =
-      localStorage.getItem(
-        key
-      );
+      localStorage.getItem(key);
 
     if (!text) {
-
       return fallback;
-
     }
 
-    return JSON.parse(
-      text
-    );
-
+    return JSON.parse(text);
 
   } catch (error) {
 
@@ -430,19 +356,14 @@ const savedChores =
     null
   );
 
-
 let chores =
-  Array.isArray(
-    savedChores
-  )
+  Array.isArray(savedChores)
     ? savedChores
     : defaultChores.map(
         function (chore) {
-
           return {
             ...chore
           };
-
         }
       );
 
@@ -453,11 +374,8 @@ const savedRecords =
     []
   );
 
-
 let records =
-  Array.isArray(
-    savedRecords
-  )
+  Array.isArray(savedRecords)
     ? savedRecords
     : [];
 
@@ -468,14 +386,10 @@ const savedBudgets =
     {}
   );
 
-
 let budgets =
   savedBudgets &&
-  typeof savedBudgets ===
-    "object" &&
-  !Array.isArray(
-    savedBudgets
-  )
+  typeof savedBudgets === "object" &&
+  !Array.isArray(savedBudgets)
     ? savedBudgets
     : {};
 
@@ -486,14 +400,10 @@ const savedSavingsGoal =
     null
   );
 
-
 let savingsGoal =
   savedSavingsGoal &&
-  typeof savedSavingsGoal ===
-    "object" &&
-  !Array.isArray(
-    savedSavingsGoal
-  )
+  typeof savedSavingsGoal === "object" &&
+  !Array.isArray(savedSavingsGoal)
     ? savedSavingsGoal
     : null;
 
@@ -526,9 +436,7 @@ function getToday() {
       "0"
     );
 
-  return (
-    `${year}-${month}-${day}`
-  );
+  return `${year}-${month}-${day}`;
 
 }
 
@@ -543,14 +451,10 @@ function getCurrentMonth() {
 }
 
 
-function formatDate(
-  dateText
-) {
+function formatDate(dateText) {
 
   const parts =
-    dateText.split(
-      "-"
-    );
+    dateText.split("-");
 
   return (
     `${Number(parts[1])}/` +
@@ -560,14 +464,10 @@ function formatDate(
 }
 
 
-function formatMonth(
-  monthText
-) {
+function formatMonth(monthText) {
 
   const parts =
-    monthText.split(
-      "-"
-    );
+    monthText.split("-");
 
   return (
     `${parts[0]}年` +
@@ -587,51 +487,33 @@ function getSelectedMonth() {
 }
 
 
-function isValidDate(
-  dateText
-) {
+function isValidDate(dateText) {
 
   if (
-    typeof dateText !==
-    "string"
+    typeof dateText !== "string"
   ) {
-
     return false;
-
   }
-
 
   if (
     !/^\d{4}-\d{2}-\d{2}$/.test(
       dateText
     )
   ) {
-
     return false;
-
   }
 
-
   const parts =
-    dateText.split(
-      "-"
-    );
+    dateText.split("-");
 
   const year =
-    Number(
-      parts[0]
-    );
+    Number(parts[0]);
 
   const month =
-    Number(
-      parts[1]
-    );
+    Number(parts[1]);
 
   const day =
-    Number(
-      parts[2]
-    );
-
+    Number(parts[2]);
 
   const date =
     new Date(
@@ -642,16 +524,9 @@ function isValidDate(
 
 
   return (
-
-    date.getFullYear() ===
-      year &&
-
-    date.getMonth() ===
-      month - 1 &&
-
-    date.getDate() ===
-      day
-
+    date.getFullYear() === year &&
+    date.getMonth() === month - 1 &&
+    date.getDate() === day
   );
 
 }
@@ -672,8 +547,7 @@ function normalizeRecords(
     ) {
 
       const type =
-        record.type ===
-        "expense"
+        record.type === "expense"
           ? "expense"
           : "income";
 
@@ -683,10 +557,8 @@ function normalizeRecords(
         ...record,
 
         id:
-          record.id !==
-            undefined &&
-          record.id !==
-            null
+          record.id !== undefined &&
+          record.id !== null
             ? record.id
             : (
                 "old-" +
@@ -704,14 +576,11 @@ function normalizeRecords(
 
         content:
           String(
-            record.content ||
-            ""
+            record.content || ""
           ),
 
         date:
-          isValidDate(
-            record.date
-          )
+          isValidDate(record.date)
             ? record.date
             : getToday()
 
@@ -719,8 +588,7 @@ function normalizeRecords(
 
 
       if (
-        type ===
-        "expense"
+        type === "expense"
       ) {
 
         normalized.category =
@@ -739,9 +607,7 @@ function normalizeRecords(
 
 
 records =
-  normalizeRecords(
-    records
-  );
+  normalizeRecords(records);
 
 
 // =====================================
@@ -752,9 +618,7 @@ function saveChores() {
 
   localStorage.setItem(
     "chores",
-    JSON.stringify(
-      chores
-    )
+    JSON.stringify(chores)
   );
 
 }
@@ -764,9 +628,7 @@ function saveRecords() {
 
   localStorage.setItem(
     "records",
-    JSON.stringify(
-      records
-    )
+    JSON.stringify(records)
   );
 
 }
@@ -776,9 +638,7 @@ function saveBudgets() {
 
   localStorage.setItem(
     "budgets",
-    JSON.stringify(
-      budgets
-    )
+    JSON.stringify(budgets)
   );
 
 }
@@ -786,15 +646,11 @@ function saveBudgets() {
 
 function saveSavingsGoal() {
 
-  if (
-    savingsGoal
-  ) {
+  if (savingsGoal) {
 
     localStorage.setItem(
       "savingsGoal",
-      JSON.stringify(
-        savingsGoal
-      )
+      JSON.stringify(savingsGoal)
     );
 
   } else {
@@ -814,18 +670,15 @@ function saveSavingsGoal() {
 
 function calculateSavingsTotal() {
 
-  let total =
-    0;
+  let total = 0;
 
 
   records.forEach(
     function (record) {
 
       if (
-        record.type ===
-          "expense" &&
-        record.category ===
-          "貯金"
+        record.type === "expense" &&
+        record.category === "貯金"
       ) {
 
         total +=
@@ -888,7 +741,7 @@ function displaySavingsGoal() {
   const remaining =
     Math.max(
       targetAmount -
-        savedAmount,
+      savedAmount,
       0
     );
 
@@ -917,8 +770,7 @@ function displaySavingsGoal() {
 
 
   if (
-    savedAmount >=
-    targetAmount
+    savedAmount >= targetAmount
   ) {
 
     savingsProgressText.textContent =
@@ -936,17 +788,13 @@ function displaySavingsGoal() {
 
 function displaySavingsGoalInput() {
 
-  if (
-    savingsGoal
-  ) {
+  if (savingsGoal) {
 
     savingsGoalNameInput.value =
-      savingsGoal.name ||
-      "";
+      savingsGoal.name || "";
 
     savingsGoalAmountInput.value =
-      savingsGoal.targetAmount ||
-      "";
+      savingsGoal.targetAmount || "";
 
   } else {
 
@@ -973,8 +821,7 @@ saveSavingsGoalButton.addEventListener(
 
     const targetAmount =
       Number(
-        savingsGoalAmountInput
-          .value
+        savingsGoalAmountInput.value
       );
 
 
@@ -996,13 +843,8 @@ saveSavingsGoalButton.addEventListener(
 
 
     savingsGoal = {
-
-      name:
-        name,
-
-      targetAmount:
-        targetAmount
-
+      name: name,
+      targetAmount: targetAmount
     };
 
 
@@ -1023,9 +865,7 @@ clearSavingsGoalButton.addEventListener(
   "click",
   function () {
 
-    if (
-      !savingsGoal
-    ) {
+    if (!savingsGoal) {
 
       alert(
         "現在、貯金目標はありません"
@@ -1042,17 +882,12 @@ clearSavingsGoalButton.addEventListener(
       );
 
 
-    if (
-      !shouldClear
-    ) {
-
+    if (!shouldClear) {
       return;
-
     }
 
 
-    savingsGoal =
-      null;
+    savingsGoal = null;
 
 
     saveSavingsGoal();
@@ -1077,9 +912,7 @@ function getSelectedBudget() {
 
   return (
     Number(
-      budgets[
-        selectedMonth
-      ]
+      budgets[selectedMonth]
     ) || 0
   );
 
@@ -1092,19 +925,10 @@ function displayBudgetInput() {
     getSelectedBudget();
 
 
-  if (
+  budgetAmountInput.value =
     budget > 0
-  ) {
-
-    budgetAmountInput.value =
-      budget;
-
-  } else {
-
-    budgetAmountInput.value =
-      "";
-
-  }
+      ? budget
+      : "";
 
 }
 
@@ -1128,7 +952,6 @@ function displayChoreOptions() {
   firstOption.value =
     "";
 
-
   firstOption.textContent =
     "お手伝いを選んでください";
 
@@ -1148,9 +971,7 @@ function displayChoreOptions() {
 
 
       option.value =
-        String(
-          chore.id
-        );
+        String(chore.id);
 
 
       option.textContent =
@@ -1163,11 +984,8 @@ function displayChoreOptions() {
       option.dataset.name =
         chore.name;
 
-
       option.dataset.amount =
-        String(
-          chore.amount
-        );
+        String(chore.amount);
 
 
       choreSelect.appendChild(
@@ -1295,12 +1113,9 @@ function displayChoreSettings() {
 
 
           if (
-            newAmountText ===
-            null
+            newAmountText === null
           ) {
-
             return;
-
           }
 
 
@@ -1350,12 +1165,8 @@ function displayChoreSettings() {
             );
 
 
-          if (
-            !shouldDelete
-          ) {
-
+          if (!shouldDelete) {
             return;
-
           }
 
 
@@ -1386,7 +1197,6 @@ function displayChoreSettings() {
         editButton
       );
 
-
       buttonArea.appendChild(
         deleteButton
       );
@@ -1395,7 +1205,6 @@ function displayChoreSettings() {
       listItem.appendChild(
         choreText
       );
-
 
       listItem.appendChild(
         buttonArea
@@ -1428,14 +1237,10 @@ function calculateWalletBalance(
     function (record) {
 
       if (
-        excludeRecordId !==
-          null &&
-        record.id ===
-          excludeRecordId
+        excludeRecordId !== null &&
+        record.id === excludeRecordId
       ) {
-
         return;
-
       }
 
 
@@ -1446,8 +1251,7 @@ function calculateWalletBalance(
 
 
       if (
-        record.type ===
-        "income"
+        record.type === "income"
       ) {
 
         walletBalance +=
@@ -1457,8 +1261,7 @@ function calculateWalletBalance(
 
 
       if (
-        record.type ===
-        "expense"
+        record.type === "expense"
       ) {
 
         walletBalance -=
@@ -1475,14 +1278,10 @@ function calculateWalletBalance(
 }
 
 
-function isSelectedMonth(
-  record
-) {
+function isSelectedMonth(record) {
 
   return (
-    typeof record.date ===
-      "string" &&
-
+    typeof record.date === "string" &&
     record.date.startsWith(
       getSelectedMonth()
     )
@@ -1513,18 +1312,13 @@ function displayCategorySummary() {
     function (record) {
 
       if (
-        record.type !==
-          "expense" ||
-
+        record.type !== "expense" ||
         !record.date ||
-
         !record.date.startsWith(
           selectedMonth
         )
       ) {
-
         return;
-
       }
 
 
@@ -1540,21 +1334,17 @@ function displayCategorySummary() {
 
 
       if (
-        !categoryTotals[
-          category
-        ]
+        !categoryTotals[category]
       ) {
 
-        categoryTotals[
-          category
-        ] = 0;
+        categoryTotals[category] =
+          0;
 
       }
 
 
-      categoryTotals[
-        category
-      ] += amount;
+      categoryTotals[category] +=
+        amount;
 
     }
   );
@@ -1567,8 +1357,7 @@ function displayCategorySummary() {
 
 
   if (
-    categories.length ===
-    0
+    categories.length === 0
   ) {
 
     const emptyMessage =
@@ -1597,10 +1386,7 @@ function displayCategorySummary() {
 
 
   categories.sort(
-    function (
-      a,
-      b
-    ) {
+    function (a, b) {
 
       return (
         categoryTotals[b] -
@@ -1739,11 +1525,9 @@ function displayCategorySummary() {
         categoryName
       );
 
-
       textArea.appendChild(
         categoryAmount
       );
-
 
       textArea.appendChild(
         percentageText
@@ -1753,7 +1537,6 @@ function displayCategorySummary() {
       listItem.appendChild(
         textArea
       );
-
 
       listItem.appendChild(
         barArea
@@ -1792,14 +1575,11 @@ function updateTotal() {
 
       if (
         !record.date ||
-
         !record.date.startsWith(
           selectedMonth
         )
       ) {
-
         return;
-
       }
 
 
@@ -1810,8 +1590,7 @@ function updateTotal() {
 
 
       if (
-        record.type ===
-        "income"
+        record.type === "income"
       ) {
 
         incomeTotal +=
@@ -1821,8 +1600,7 @@ function updateTotal() {
 
 
       if (
-        record.type ===
-        "expense"
+        record.type === "expense"
       ) {
 
         expenseTotal +=
@@ -1952,7 +1730,7 @@ function updateTotal() {
 
 
 // =====================================
-// 画面再表示
+// 再表示
 // =====================================
 
 function refreshScreen() {
@@ -1967,12 +1745,10 @@ function refreshScreen() {
 
 
 // =====================================
-// 記録編集画面
+// 編集画面
 // =====================================
 
-function openEditModal(
-  record
-) {
+function openEditModal(record) {
 
   editingRecordId =
     record.id;
@@ -1991,8 +1767,7 @@ function openEditModal(
 
 
   if (
-    record.type ===
-    "expense"
+    record.type === "expense"
   ) {
 
     editModalTitle.textContent =
@@ -2089,9 +1864,7 @@ function saveEditedRecord() {
     );
 
 
-  if (
-    !record
-  ) {
+  if (!record) {
 
     closeEditModal();
 
@@ -2133,8 +1906,7 @@ function saveEditedRecord() {
 
 
   if (
-    newContent ===
-    ""
+    newContent === ""
   ) {
 
     alert(
@@ -2147,9 +1919,7 @@ function saveEditedRecord() {
 
 
   if (
-    !isValidDate(
-      newDate
-    )
+    !isValidDate(newDate)
   ) {
 
     alert(
@@ -2162,8 +1932,7 @@ function saveEditedRecord() {
 
 
   if (
-    record.type ===
-    "expense"
+    record.type === "expense"
   ) {
 
     const availableMoney =
@@ -2200,7 +1969,7 @@ function saveEditedRecord() {
 
     if (
       balanceWithoutRecord +
-        newAmount <
+      newAmount <
       0
     ) {
 
@@ -2218,10 +1987,8 @@ function saveEditedRecord() {
   record.amount =
     newAmount;
 
-
   record.content =
     newContent;
-
 
   record.date =
     newDate;
@@ -2241,6 +2008,8 @@ function saveEditedRecord() {
 
   refreshScreen();
 
+  scrollToRecordList();
+
 
   alert(
     "記録を変更しました"
@@ -2253,6 +2022,68 @@ function saveEditedRecord() {
 // 記録一覧
 // =====================================
 
+function getSortedSelectedRecords() {
+
+  return records
+    .map(
+      function (
+        record,
+        index
+      ) {
+
+        return {
+          record: record,
+          index: index
+        };
+
+      }
+    )
+    .filter(
+      function (item) {
+
+        return isSelectedMonth(
+          item.record
+        );
+
+      }
+    )
+    .sort(
+      function (a, b) {
+
+        const dateCompare =
+          b.record.date.localeCompare(
+            a.record.date
+          );
+
+
+        if (
+          dateCompare !== 0
+        ) {
+
+          return dateCompare;
+
+        }
+
+
+        // 同じ日付なら後から登録した方を上にする
+        return (
+          b.index -
+          a.index
+        );
+
+      }
+    )
+    .map(
+      function (item) {
+
+        return item.record;
+
+      }
+    );
+
+}
+
+
 function displayRecords() {
 
   recordList.innerHTML =
@@ -2260,14 +2091,11 @@ function displayRecords() {
 
 
   const selectedRecords =
-    records.filter(
-      isSelectedMonth
-    );
+    getSortedSelectedRecords();
 
 
   if (
-    selectedRecords.length ===
-    0
+    selectedRecords.length === 0
   ) {
 
     const emptyMessage =
@@ -2329,8 +2157,7 @@ function displayRecords() {
 
 
       if (
-        record.type ===
-        "income"
+        record.type === "income"
       ) {
 
         recordText.textContent =
@@ -2349,8 +2176,7 @@ function displayRecords() {
 
 
       if (
-        record.type ===
-        "expense"
+        record.type === "expense"
       ) {
 
         recordText.textContent =
@@ -2409,12 +2235,8 @@ function displayRecords() {
             );
 
 
-          if (
-            !shouldDelete
-          ) {
-
+          if (!shouldDelete) {
             return;
-
           }
 
 
@@ -2443,11 +2265,9 @@ function displayRecords() {
         recordText
       );
 
-
       listItem.appendChild(
         editButton
       );
-
 
       listItem.appendChild(
         deleteButton
@@ -2465,7 +2285,7 @@ function displayRecords() {
 
 
 // =====================================
-// 編集画面イベント
+// 編集イベント
 // =====================================
 
 saveEditButton.addEventListener(
@@ -2502,9 +2322,7 @@ document.addEventListener(
   function (event) {
 
     if (
-      event.key ===
-        "Escape" &&
-
+      event.key === "Escape" &&
       !editRecordModal.classList.contains(
         "is-hidden"
       )
@@ -2528,23 +2346,19 @@ exportDataButton.addEventListener(
 
     const exportData = {
 
-      version:
-        5,
+      version: 5,
 
       appVersion:
-        "0.12.0",
+        "0.12.2",
 
       exportedAt:
         new Date().toISOString(),
 
-      chores:
-        chores,
+      chores: chores,
 
-      records:
-        records,
+      records: records,
 
-      budgets:
-        budgets,
+      budgets: budgets,
 
       savingsGoal:
         savingsGoal
@@ -2562,9 +2376,7 @@ exportDataButton.addEventListener(
 
     const file =
       new Blob(
-        [
-          jsonText
-        ],
+        [jsonText],
         {
           type:
             "application/json"
@@ -2625,17 +2437,11 @@ importDataInput.addEventListener(
   function () {
 
     const selectedFile =
-      importDataInput.files[
-        0
-      ];
+      importDataInput.files[0];
 
 
-    if (
-      !selectedFile
-    ) {
-
+    if (!selectedFile) {
       return;
-
     }
 
 
@@ -2657,20 +2463,15 @@ importDataInput.addEventListener(
 
           if (
             !importedData ||
-
             !Array.isArray(
               importedData.chores
             ) ||
-
             !Array.isArray(
               importedData.records
             ) ||
-
             !importedData.budgets ||
-
             typeof importedData.budgets !==
               "object" ||
-
             Array.isArray(
               importedData.budgets
             )
@@ -2689,9 +2490,7 @@ importDataInput.addEventListener(
             );
 
 
-          if (
-            !shouldImport
-          ) {
+          if (!shouldImport) {
 
             importDataInput.value =
               "";
@@ -2717,10 +2516,8 @@ importDataInput.addEventListener(
 
           if (
             importedData.savingsGoal &&
-
             typeof importedData.savingsGoal ===
               "object" &&
-
             !Array.isArray(
               importedData.savingsGoal
             )
@@ -2795,7 +2592,7 @@ importDataInput.addEventListener(
 
 
 // =====================================
-// お手伝い設定追加
+// お手伝い追加
 // =====================================
 
 addChoreButton.addEventListener(
@@ -2816,9 +2613,7 @@ addChoreButton.addEventListener(
 
     if (
       name === "" ||
-
       amount <= 0 ||
-
       !Number.isInteger(
         amount
       )
@@ -2838,17 +2633,14 @@ addChoreButton.addEventListener(
         function (chore) {
 
           return (
-            chore.name ===
-            name
+            chore.name === name
           );
 
         }
       );
 
 
-    if (
-      alreadyExists
-    ) {
+    if (alreadyExists) {
 
       alert(
         "同じ名前のお手伝いがすでにあります"
@@ -2898,7 +2690,6 @@ addChoreButton.addEventListener(
     choreNameInput.value =
       "";
 
-
     choreAmountInput.value =
       "";
 
@@ -2924,8 +2715,7 @@ choreSelect.addEventListener(
 
 
     amountInput.value =
-      selectedOption.dataset
-        .amount ||
+      selectedOption.dataset.amount ||
       "";
 
   }
@@ -2958,7 +2748,6 @@ saveBudgetButton.addEventListener(
 
     if (
       amount < 0 ||
-
       !Number.isInteger(
         amount
       )
@@ -2977,9 +2766,8 @@ saveBudgetButton.addEventListener(
       getSelectedMonth();
 
 
-    budgets[
-      selectedMonth
-    ] = amount;
+    budgets[selectedMonth] =
+      amount;
 
 
     saveBudgets();
@@ -3013,14 +2801,12 @@ recordButton.addEventListener(
 
     const amount =
       Number(
-        selectedOption.dataset
-          .amount
+        selectedOption.dataset.amount
       );
 
 
     const content =
-      selectedOption.dataset
-        .name;
+      selectedOption.dataset.name;
 
 
     const recordDate =
@@ -3028,15 +2814,10 @@ recordButton.addEventListener(
 
 
     if (
-      choreSelect.value ===
-        "" ||
-
+      choreSelect.value === "" ||
       amount <= 0 ||
-
       !content ||
-
-      recordDate ===
-        ""
+      recordDate === ""
     ) {
 
       alert(
@@ -3089,16 +2870,14 @@ recordButton.addEventListener(
     choreSelect.value =
       "";
 
-
     amountInput.value =
       "";
-
 
     choreDateInput.value =
       getToday();
 
 
-    choreSelect.focus();
+    scrollToRecordList();
 
   }
 );
@@ -3134,15 +2913,11 @@ expenseButton.addEventListener(
 
     if (
       amount <= 0 ||
-
       !Number.isInteger(
         amount
       ) ||
-
       content === "" ||
-
       category === "" ||
-
       recordDate === ""
     ) {
 
@@ -3217,20 +2992,17 @@ expenseButton.addEventListener(
     expenseAmountInput.value =
       "";
 
-
     expenseContentInput.value =
       "";
 
-
     expenseCategorySelect.value =
       "";
-
 
     expenseDateInput.value =
       getToday();
 
 
-    expenseAmountInput.focus();
+    scrollToRecordList();
 
   }
 );
