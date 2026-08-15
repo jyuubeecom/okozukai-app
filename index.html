@@ -28,10 +28,17 @@
 
 <body>
   <main class="app">
+
     <h1>おこづかいメモ</h1>
 
+    <p class="app-version">
+      Ver. 0.10.0 ｜ 2026/08/15
+    </p>
+
     <section class="wallet-balance">
-      <p>いま持っているお金</p>
+      <p>
+        いま持っているお金
+      </p>
 
       <strong id="wallet-balance-total">
         0円
@@ -98,7 +105,9 @@
     </section>
 
     <section class="budget-area">
-      <h2>今月の予算設定</h2>
+      <h2>
+        今月の予算設定
+      </h2>
 
       <label for="budget-amount">
         今月使ってよい金額
@@ -117,7 +126,9 @@
     </section>
 
     <section class="chore-settings">
-      <h2>お手伝い設定</h2>
+      <h2>
+        お手伝い設定
+      </h2>
 
       <label for="chore-name">
         お手伝いの名前
@@ -144,11 +155,14 @@
         お手伝いを追加する
       </button>
 
-      <ul id="chore-settings-list"></ul>
+      <ul id="chore-settings-list">
+      </ul>
     </section>
 
     <section class="input-area">
-      <h2>お手伝いを記録する</h2>
+      <h2>
+        お手伝いを記録する
+      </h2>
 
       <label for="chore-select">
         お手伝いした内容
@@ -186,7 +200,9 @@
     </section>
 
     <section class="expense-area">
-      <h2>使ったお金を記録する</h2>
+      <h2>
+        使ったお金を記録する
+      </h2>
 
       <label for="expense-amount">
         金額
@@ -254,14 +270,18 @@
     </section>
 
     <section class="category-summary">
-      <h2>カテゴリ別の支出</h2>
+      <h2>
+        カテゴリ別の支出
+      </h2>
 
       <ul id="category-summary-list">
       </ul>
     </section>
 
     <section class="data-area">
-      <h2>データ管理</h2>
+      <h2>
+        データ管理
+      </h2>
 
       <p class="data-description">
         記録や設定をファイルに保存できます。
@@ -286,12 +306,102 @@
     </section>
 
     <section class="records">
-      <h2>記録一覧</h2>
+      <h2>
+        記録一覧
+      </h2>
 
       <ul id="record-list">
       </ul>
     </section>
+
   </main>
+
+  <!-- 記録編集画面 -->
+  <div
+    id="edit-record-modal"
+    class="edit-modal is-hidden"
+    aria-hidden="true"
+  >
+    <div class="edit-modal-card">
+
+      <h2 id="edit-modal-title">
+        記録を編集
+      </h2>
+
+      <label for="edit-record-amount">
+        金額
+      </label>
+
+      <input
+        id="edit-record-amount"
+        type="number"
+        min="1"
+      >
+
+      <label for="edit-record-content">
+        内容
+      </label>
+
+      <input
+        id="edit-record-content"
+        type="text"
+      >
+
+      <div id="edit-category-area">
+        <label for="edit-record-category">
+          カテゴリ
+        </label>
+
+        <select id="edit-record-category">
+          <option value="おかし">
+            おかし
+          </option>
+
+          <option value="文房具">
+            文房具
+          </option>
+
+          <option value="ゲーム">
+            ゲーム
+          </option>
+
+          <option value="貯金">
+            貯金
+          </option>
+
+          <option value="その他">
+            その他
+          </option>
+        </select>
+      </div>
+
+      <label for="edit-record-date">
+        日付
+      </label>
+
+      <input
+        id="edit-record-date"
+        type="date"
+      >
+
+      <div class="edit-modal-buttons">
+        <button
+          id="save-edit-button"
+          type="button"
+        >
+          変更を保存
+        </button>
+
+        <button
+          id="cancel-edit-button"
+          type="button"
+        >
+          キャンセル
+        </button>
+      </div>
+
+    </div>
+  </div>
 
   <script src="script.js"></script>
 
@@ -304,15 +414,18 @@
             .register(
               "./service-worker.js"
             )
-            .catch(function (error) {
-              console.error(
-                "Service Workerの登録に失敗しました",
-                error
-              );
-            });
+            .catch(
+              function (error) {
+                console.error(
+                  "Service Workerの登録に失敗しました",
+                  error
+                );
+              }
+            );
         }
       );
     }
   </script>
+
 </body>
 </html>
