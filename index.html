@@ -294,5 +294,25 @@
   </main>
 
   <script src="script.js"></script>
+
+  <script>
+    if ("serviceWorker" in navigator) {
+      window.addEventListener(
+        "load",
+        function () {
+          navigator.serviceWorker
+            .register(
+              "./service-worker.js"
+            )
+            .catch(function (error) {
+              console.error(
+                "Service Workerの登録に失敗しました",
+                error
+              );
+            });
+        }
+      );
+    }
+  </script>
 </body>
 </html>
