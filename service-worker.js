@@ -1,28 +1,25 @@
 // =====================================
 // おこづかいメモ
 // Service Worker
-// Ver. 0.10.1
+// Ver. 0.11.0
 // =====================================
 
 const CACHE_NAME =
-  "okozukai-cache-v0.10.1";
+  "okozukai-cache-v0.11.0";
 
 const CACHE_FILES = [
   "./",
   "./index.html",
-  "./style.css?v=0.10.1",
-  "./script.js?v=0.10.1",
-  "./manifest.json?v=0.10.1",
-  "./icon.svg?v=0.10.1"
+  "./style.css?v=0.11.0",
+  "./script.js?v=0.11.0",
+  "./manifest.json?v=0.11.0",
+  "./icon.svg?v=0.11.0"
 ];
-
-// -------------------------
-// インストール
-// -------------------------
 
 self.addEventListener(
   "install",
   function (event) {
+
     event.waitUntil(
       caches
         .open(
@@ -30,24 +27,24 @@ self.addEventListener(
         )
         .then(
           function (cache) {
+
             return cache.addAll(
               CACHE_FILES
             );
+
           }
         )
     );
 
     self.skipWaiting();
+
   }
 );
-
-// -------------------------
-// 古いキャッシュ削除
-// -------------------------
 
 self.addEventListener(
   "activate",
   function (event) {
+
     event.waitUntil(
       caches
         .keys()
@@ -55,43 +52,46 @@ self.addEventListener(
           function (
             cacheNames
           ) {
+
             return Promise.all(
               cacheNames.map(
                 function (
                   cacheName
                 ) {
+
                   if (
                     cacheName !==
                     CACHE_NAME
                   ) {
+
                     return caches.delete(
                       cacheName
                     );
+
                   }
+
                 }
               )
             );
+
           }
         )
     );
 
     self.clients.claim();
+
   }
 );
-
-// -------------------------
-// ファイル読み込み
-// -------------------------
 
 self.addEventListener(
   "fetch",
   function (event) {
+
     const request =
       event.request;
 
     if (
-      request.method !==
-      "GET"
+      request.method !== "GET"
     ) {
       return;
     }
@@ -108,11 +108,11 @@ self.addEventListener(
       return;
     }
 
-    // ページ本体
     if (
       request.mode ===
       "navigate"
     ) {
+
       event.respondWith(
         fetch(
           request
@@ -121,14 +121,18 @@ self.addEventListener(
             function (
               response
             ) {
+
               return response;
+
             }
           )
           .catch(
             function () {
+
               return caches.match(
                 "./index.html"
               );
+
             }
           )
       );
@@ -136,7 +140,6 @@ self.addEventListener(
       return;
     }
 
-    // CSS・JSなど
     event.respondWith(
       fetch(
         request
@@ -145,10 +148,12 @@ self.addEventListener(
           function (
             response
           ) {
+
             if (
               response &&
               response.ok
             ) {
+
               const copy =
                 response.clone();
 
@@ -160,24 +165,31 @@ self.addEventListener(
                   function (
                     cache
                   ) {
+
                     cache.put(
                       request,
                       copy
                     );
+
                   }
                 );
+
             }
 
             return response;
+
           }
         )
         .catch(
           function () {
+
             return caches.match(
               request
             );
+
           }
         )
     );
+
   }
 );

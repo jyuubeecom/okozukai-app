@@ -18,12 +18,12 @@
 
   <link
     rel="stylesheet"
-    href="./style.css?v=0.10.1"
+    href="./style.css?v=0.11.0"
   >
 
   <link
     rel="manifest"
-    href="./manifest.json?v=0.10.1"
+    href="./manifest.json?v=0.11.0"
   >
 </head>
 
@@ -34,18 +34,102 @@
     <h1>おこづかいメモ</h1>
 
     <p class="app-version">
-      Ver. 0.10.1 ｜ 2026/08/15
+      Ver. 0.11.0 ｜ 2026/08/15
     </p>
 
     <section class="wallet-balance">
 
-      <p>
-        いま持っているお金
-      </p>
+      <p>いま持っているお金</p>
 
       <strong id="wallet-balance-total">
         0円
       </strong>
+
+    </section>
+
+    <section class="savings-goal">
+
+      <h2>貯金目標 🎯</h2>
+
+      <div class="savings-status">
+
+        <p
+          id="savings-goal-title"
+          class="savings-goal-title"
+        >
+          目標を設定してみよう
+        </p>
+
+        <div class="savings-amount-display">
+
+          <strong id="savings-saved-amount">
+            0円
+          </strong>
+
+          <span> / </span>
+
+          <span id="savings-target-amount">
+            0円
+          </span>
+
+        </div>
+
+        <div class="savings-bar-area">
+
+          <div
+            id="savings-progress-bar"
+            class="savings-progress-bar"
+          >
+          </div>
+
+        </div>
+
+        <p
+          id="savings-progress-text"
+          class="savings-progress-text"
+        >
+          「貯金」で記録するとここにたまります
+        </p>
+
+      </div>
+
+      <label for="savings-goal-name">
+        何のために貯金する？
+      </label>
+
+      <input
+        id="savings-goal-name"
+        type="text"
+        placeholder="例：ゲーム"
+      >
+
+      <label for="savings-goal-amount">
+        目標金額
+      </label>
+
+      <input
+        id="savings-goal-amount"
+        type="number"
+        min="1"
+        placeholder="例：5000"
+      >
+
+      <div class="savings-goal-buttons">
+
+        <button id="save-savings-goal-button">
+          目標を保存する
+        </button>
+
+        <button id="clear-savings-goal-button">
+          目標をやめる
+        </button>
+
+      </div>
+
+      <p class="savings-help">
+        使ったお金を記録するときに
+        「貯金」を選ぶと、貯金額として加算されます。
+      </p>
 
     </section>
 
@@ -114,9 +198,7 @@
 
     <section class="budget-area">
 
-      <h2>
-        今月の予算設定
-      </h2>
+      <h2>今月の予算設定</h2>
 
       <label for="budget-amount">
         今月使ってよい金額
@@ -137,9 +219,7 @@
 
     <section class="chore-settings">
 
-      <h2>
-        お手伝い設定
-      </h2>
+      <h2>お手伝い設定</h2>
 
       <label for="chore-name">
         お手伝いの名前
@@ -172,18 +252,18 @@
 
     <section class="input-area">
 
-      <h2>
-        お手伝いを記録する
-      </h2>
+      <h2>お手伝いを記録する</h2>
 
       <label for="chore-select">
         お手伝いした内容
       </label>
 
       <select id="chore-select">
+
         <option value="">
           お手伝いを選んでください
         </option>
+
       </select>
 
       <label for="amount">
@@ -214,9 +294,7 @@
 
     <section class="expense-area">
 
-      <h2>
-        使ったお金を記録する
-      </h2>
+      <h2>使ったお金を記録する</h2>
 
       <label for="expense-amount">
         金額
@@ -288,9 +366,7 @@
 
     <section class="category-summary">
 
-      <h2>
-        カテゴリ別の支出
-      </h2>
+      <h2>カテゴリ別の支出</h2>
 
       <ul id="category-summary-list"></ul>
 
@@ -298,9 +374,7 @@
 
     <section class="data-area">
 
-      <h2>
-        データ管理
-      </h2>
+      <h2>データ管理</h2>
 
       <p class="data-description">
         記録や設定をファイルに保存できます。
@@ -327,9 +401,7 @@
 
     <section class="records">
 
-      <h2>
-        記録一覧
-      </h2>
+      <h2>記録一覧</h2>
 
       <ul id="record-list"></ul>
 
@@ -337,7 +409,6 @@
 
   </main>
 
-  <!-- 記録編集画面 -->
   <div
     id="edit-record-modal"
     class="edit-modal is-hidden"
@@ -435,7 +506,7 @@
 
   </div>
 
-  <script src="./script.js?v=0.10.1"></script>
+  <script src="./script.js?v=0.11.0"></script>
 
   <script>
     if ("serviceWorker" in navigator) {
@@ -445,18 +516,21 @@
           try {
             const registration =
               await navigator.serviceWorker.register(
-                "./service-worker.js?v=0.10.1",
+                "./service-worker.js?v=0.11.0",
                 {
                   updateViaCache: "none"
                 }
               );
 
             registration.update();
+
           } catch (error) {
+
             console.error(
               "Service Workerの登録に失敗しました",
               error
             );
+
           }
         }
       );

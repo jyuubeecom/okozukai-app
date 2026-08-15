@@ -5,11 +5,13 @@
 body {
   margin: 0;
   padding: 20px;
+
   font-family:
     "Hiragino Kaku Gothic ProN",
     "Yu Gothic",
     Meiryo,
     sans-serif;
+
   color: #333;
 
   background:
@@ -109,6 +111,138 @@ h2 {
   color: #16803b;
 }
 
+/* 貯金目標 */
+
+.savings-goal {
+  margin-bottom: 20px;
+  padding: 20px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #fff1fa,
+      #f7efff
+    );
+
+  border-radius: 18px;
+}
+
+.savings-goal h2 {
+  text-align: center;
+
+  color: #8d4293;
+}
+
+.savings-status {
+  padding: 18px;
+
+  text-align: center;
+
+  background-color: #ffffff;
+
+  border-radius: 15px;
+}
+
+.savings-goal-title {
+  margin: 0 0 10px;
+
+  font-size: 20px;
+  font-weight: bold;
+
+  color: #7b3c86;
+}
+
+.savings-amount-display {
+  margin: 8px 0 14px;
+
+  font-size: 18px;
+}
+
+#savings-saved-amount {
+  font-size: 28px;
+
+  color: #e46b9d;
+}
+
+#savings-target-amount {
+  font-weight: bold;
+
+  color: #666;
+}
+
+.savings-bar-area {
+  width: 100%;
+  height: 20px;
+
+  overflow: hidden;
+
+  background-color: #eeeeee;
+
+  border-radius: 20px;
+}
+
+.savings-progress-bar {
+  width: 0;
+  height: 100%;
+
+  background:
+    linear-gradient(
+      90deg,
+      #ef78aa,
+      #a86de4
+    );
+
+  border-radius: 20px;
+
+  transition: width 0.4s;
+}
+
+.savings-progress-text {
+  margin: 12px 0 0;
+
+  font-weight: bold;
+
+  color: #75527c;
+}
+
+.savings-goal-buttons {
+  display: grid;
+
+  grid-template-columns:
+    1fr 1fr;
+
+  gap: 10px;
+}
+
+#save-savings-goal-button {
+  background-color: #a258b1;
+}
+
+#save-savings-goal-button:hover {
+  background-color: #884596;
+}
+
+#clear-savings-goal-button {
+  background-color: #888888;
+}
+
+#clear-savings-goal-button:hover {
+  background-color: #6e6e6e;
+}
+
+.savings-help {
+  margin: 14px 0 0;
+
+  text-align: center;
+
+  font-size: 14px;
+  line-height: 1.6;
+
+  color: #777;
+}
+
+/* 月まとめ */
+
 .summary {
   margin-bottom: 20px;
   padding: 20px;
@@ -200,7 +334,6 @@ label {
 input,
 select {
   width: 100%;
-
   min-height: 50px;
 
   padding: 13px;
@@ -235,7 +368,6 @@ input[readonly] {
 
 button {
   width: 100%;
-
   min-height: 52px;
 
   margin-top: 18px;
@@ -323,11 +455,9 @@ button:active {
 .edit-chore-button,
 .remove-chore-button {
   width: auto;
-
   min-height: 38px;
 
   margin: 0;
-
   padding: 8px 11px;
 
   font-size: 13px;
@@ -380,12 +510,10 @@ button:active {
 
 .record-edit-button {
   width: auto;
-
   min-width: 60px;
   min-height: 38px;
 
   margin: 0;
-
   padding: 8px 12px;
 
   font-size: 14px;
@@ -399,12 +527,10 @@ button:active {
 
 .delete-button {
   width: auto;
-
   min-width: 60px;
   min-height: 38px;
 
   margin: 0;
-
   padding: 8px 12px;
 
   font-size: 14px;
@@ -433,7 +559,6 @@ button:active {
   display: block !important;
 
   margin-top: 14px !important;
-
   padding: 10px;
 
   text-align: center;
@@ -541,7 +666,6 @@ button:active {
 
 .category-bar {
   height: 100%;
-
   min-width: 2px;
 
   background-color: #ef9b32;
@@ -582,11 +706,9 @@ button:active {
   display: block;
 
   width: 100%;
-
   min-height: 52px;
 
   margin-top: 12px;
-
   padding: 14px 16px;
 
   text-align: center;
@@ -608,9 +730,9 @@ button:active {
 }
 
 /* 編集画面 */
+
 .edit-modal {
   position: fixed;
-
   z-index: 1000;
 
   inset: 0;
@@ -633,7 +755,6 @@ button:active {
 .edit-modal-card {
   width: 100%;
   max-width: 500px;
-
   max-height: 90vh;
 
   overflow-y: auto;
@@ -693,6 +814,7 @@ button:active {
 }
 
 /* スマホ */
+
 @media screen and (max-width: 600px) {
 
   body {
@@ -736,8 +858,13 @@ button:active {
   .expense-area,
   .records,
   .category-summary,
-  .data-area {
+  .data-area,
+  .savings-goal {
     padding: 16px;
+  }
+
+  .savings-goal-buttons {
+    grid-template-columns: 1fr;
   }
 
   .chore-setting-item {
@@ -783,7 +910,6 @@ button:active {
   }
 
   .edit-modal-buttons {
-    grid-template-columns:
-      1fr;
+    grid-template-columns: 1fr;
   }
 }
