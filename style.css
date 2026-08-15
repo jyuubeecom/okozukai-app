@@ -1,5 +1,14 @@
+/* =====================================
+   おこづかいメモ
+   Ver. 0.12.0
+===================================== */
+
 * {
   box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 body {
@@ -25,6 +34,10 @@ body {
 body.modal-open {
   overflow: hidden;
 }
+
+/* =====================================
+   アプリ本体
+===================================== */
 
 .app {
   width: 100%;
@@ -63,7 +76,7 @@ h2 {
 .app-version {
   width: fit-content;
 
-  margin: 8px auto 20px;
+  margin: 8px auto 18px;
   padding: 7px 14px;
 
   color: #ffffff;
@@ -75,6 +88,124 @@ h2 {
 
   border-radius: 20px;
 }
+
+
+/* =====================================
+   上部メニュー
+===================================== */
+
+.main-nav {
+  position: sticky;
+
+  z-index: 100;
+
+  top: 8px;
+
+  display: grid;
+
+  grid-template-columns:
+    repeat(4, 1fr);
+
+  gap: 8px;
+
+  margin-bottom: 22px;
+  padding: 8px;
+
+  background-color:
+    rgba(255, 255, 255, 0.96);
+
+  border: 1px solid #e1e7ee;
+
+  border-radius: 18px;
+
+  box-shadow:
+    0 6px 18px
+    rgba(65, 90, 120, 0.13);
+}
+
+.nav-button {
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: center;
+  justify-content: center;
+
+  gap: 4px;
+
+  min-height: 64px;
+
+  margin: 0;
+  padding: 8px 5px;
+
+  font-size: 22px;
+
+  color: #555;
+
+  background-color: #f3f5f8;
+
+  border: 2px solid transparent;
+
+  border-radius: 13px;
+}
+
+.nav-button span {
+  font-size: 13px;
+  font-weight: bold;
+}
+
+.nav-button:hover {
+  color: #2673d9;
+
+  background-color: #eaf3ff;
+}
+
+.nav-button.active {
+  color: #ffffff;
+
+  background-color: #2673d9;
+
+  border-color: #2673d9;
+}
+
+
+/* =====================================
+   ページ切り替え
+===================================== */
+
+.app-page {
+  display: none;
+}
+
+.app-page.active {
+  display: block;
+
+  animation:
+    pageFade 0.2s ease;
+}
+
+@keyframes pageFade {
+
+  from {
+    opacity: 0;
+
+    transform:
+      translateY(5px);
+  }
+
+  to {
+    opacity: 1;
+
+    transform:
+      translateY(0);
+  }
+
+}
+
+
+/* =====================================
+   現在の残高
+===================================== */
 
 .wallet-balance {
   margin-bottom: 20px;
@@ -111,7 +242,105 @@ h2 {
   color: #16803b;
 }
 
-/* 貯金目標 */
+
+/* =====================================
+   月選択
+===================================== */
+
+.month-area {
+  margin-bottom: 20px;
+  padding: 16px 20px;
+
+  background-color: #eef6ff;
+
+  border-radius: 18px;
+}
+
+.month-area label {
+  margin-top: 0;
+}
+
+
+/* =====================================
+   月まとめ
+===================================== */
+
+.summary {
+  margin-bottom: 20px;
+  padding: 20px;
+
+  background-color: #fff7d5;
+
+  border-radius: 18px;
+}
+
+#summary-title {
+  text-align: center;
+
+  color: #795a00;
+}
+
+.summary p {
+  display: flex;
+
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 15px;
+
+  margin: 12px 0;
+
+  font-size: 18px;
+}
+
+.summary strong {
+  font-size: 22px;
+}
+
+#received-total {
+  color: #148b47;
+}
+
+#spent-total {
+  color: #df5a45;
+}
+
+#balance-total {
+  color: #2673d9;
+}
+
+.budget-message {
+  display: block !important;
+
+  margin-top: 14px !important;
+  padding: 10px;
+
+  text-align: center;
+
+  font-size: 15px !important;
+  font-weight: bold;
+
+  background-color: #ffffff;
+
+  border-radius: 10px;
+}
+
+.budget-safe {
+  color: #18894b;
+}
+
+.budget-warning {
+  color: #e27800;
+}
+
+.budget-over {
+  color: #d83232;
+}
+
+
+/* =====================================
+   貯金目標
+===================================== */
 
 .savings-goal {
   margin-bottom: 20px;
@@ -194,7 +423,8 @@ h2 {
 
   border-radius: 20px;
 
-  transition: width 0.4s;
+  transition:
+    width 0.4s;
 }
 
 .savings-progress-text {
@@ -241,66 +471,22 @@ h2 {
   color: #777;
 }
 
-/* 月まとめ */
 
-.summary {
-  margin-bottom: 20px;
-  padding: 20px;
+/* =====================================
+   各エリア
+===================================== */
 
-  background-color: #fff7d5;
-
-  border-radius: 18px;
-}
-
-#summary-title {
-  text-align: center;
-
-  color: #795a00;
-}
-
-.summary p {
-  display: flex;
-
-  align-items: center;
-  justify-content: space-between;
-
-  gap: 15px;
-
-  margin: 12px 0;
-
-  font-size: 18px;
-}
-
-.summary strong {
-  font-size: 22px;
-}
-
-#received-total {
-  color: #148b47;
-}
-
-#spent-total {
-  color: #df5a45;
-}
-
-#balance-total {
-  color: #2673d9;
-}
-
-.month-area,
 .budget-area,
 .chore-settings,
 .input-area,
 .expense-area,
-.records {
+.records,
+.data-area,
+.category-summary {
   margin-bottom: 20px;
   padding: 20px;
 
   border-radius: 18px;
-}
-
-.month-area {
-  background-color: #eef6ff;
 }
 
 .budget-area {
@@ -322,6 +508,24 @@ h2 {
 .records {
   background-color: #f4f4f4;
 }
+
+.data-area {
+  background-color: #f1efff;
+}
+
+.setting-description,
+.data-description {
+  margin-top: -5px;
+
+  color: #666;
+
+  line-height: 1.6;
+}
+
+
+/* =====================================
+   入力欄
+===================================== */
 
 label {
   display: block;
@@ -366,12 +570,16 @@ input[readonly] {
   background-color: #f0f2f5;
 }
 
+
+/* =====================================
+   ボタン
+===================================== */
+
 button {
   width: 100%;
   min-height: 52px;
 
   margin-top: 18px;
-
   padding: 12px 16px;
 
   font-size: 18px;
@@ -397,7 +605,8 @@ button:hover {
 }
 
 button:active {
-  transform: scale(0.98);
+  transform:
+    scale(0.98);
 }
 
 #add-chore-button {
@@ -415,6 +624,11 @@ button:active {
 #expense-button:hover {
   background-color: #d8642c;
 }
+
+
+/* =====================================
+   お手伝い設定一覧
+===================================== */
 
 #chore-settings-list,
 #record-list {
@@ -437,7 +651,8 @@ button:active {
 
   background-color: #ffffff;
 
-  border-left: 6px solid #2fa95b;
+  border-left:
+    6px solid #2fa95b;
 
   border-radius: 12px;
 }
@@ -479,6 +694,11 @@ button:active {
   background-color: #bd3e3e;
 }
 
+
+/* =====================================
+   記録一覧
+===================================== */
+
 #record-list li {
   display: flex;
 
@@ -501,11 +721,13 @@ button:active {
 }
 
 .income-record {
-  border-left: 6px solid #2fa95b;
+  border-left:
+    6px solid #2fa95b;
 }
 
 .expense-record {
-  border-left: 6px solid #ef7d42;
+  border-left:
+    6px solid #ef7d42;
 }
 
 .record-edit-button {
@@ -552,44 +774,17 @@ button:active {
 
   color: #777;
 
-  border-left: 6px solid #bbb;
+  border-left:
+    6px solid #bbb;
 }
 
-.budget-message {
-  display: block !important;
 
-  margin-top: 14px !important;
-  padding: 10px;
-
-  text-align: center;
-
-  font-size: 15px !important;
-  font-weight: bold;
-
-  background-color: #ffffff;
-
-  border-radius: 10px;
-}
-
-.budget-safe {
-  color: #18894b;
-}
-
-.budget-warning {
-  color: #e27800;
-}
-
-.budget-over {
-  color: #d83232;
-}
+/* =====================================
+   カテゴリ別支出
+===================================== */
 
 .category-summary {
-  margin-bottom: 20px;
-  padding: 20px;
-
   background-color: #fff8e8;
-
-  border-radius: 18px;
 }
 
 #category-summary-list {
@@ -607,7 +802,8 @@ button:active {
 
   background-color: #ffffff;
 
-  border-left: 6px solid #ef9b32;
+  border-left:
+    6px solid #ef9b32;
 
   border-radius: 12px;
 }
@@ -672,23 +868,14 @@ button:active {
 
   border-radius: 20px;
 
-  transition: width 0.3s;
+  transition:
+    width 0.3s;
 }
 
-.data-area {
-  margin-bottom: 20px;
-  padding: 20px;
 
-  background-color: #f1efff;
-
-  border-radius: 18px;
-}
-
-.data-description {
-  color: #666;
-
-  line-height: 1.6;
-}
+/* =====================================
+   データ管理
+===================================== */
 
 #export-data-button {
   background-color: #7257c7;
@@ -729,10 +916,14 @@ button:active {
   background-color: #3e68aa;
 }
 
-/* 編集画面 */
+
+/* =====================================
+   記録編集画面
+===================================== */
 
 .edit-modal {
   position: fixed;
+
   z-index: 1000;
 
   inset: 0;
@@ -813,16 +1004,19 @@ button:active {
   display: none;
 }
 
-/* スマホ */
+
+/* =====================================
+   スマホ
+===================================== */
 
 @media screen and (max-width: 600px) {
 
   body {
-    padding: 10px;
+    padding: 8px;
   }
 
   .app {
-    padding: 16px;
+    padding: 14px;
 
     border-radius: 18px;
   }
@@ -836,7 +1030,31 @@ button:active {
   }
 
   .app-version {
-    font-size: 13px;
+    font-size: 12px;
+  }
+
+  .main-nav {
+    top: 5px;
+
+    gap: 5px;
+
+    padding: 6px;
+
+    border-radius: 15px;
+  }
+
+  .nav-button {
+    min-height: 58px;
+
+    padding: 6px 2px;
+
+    font-size: 20px;
+
+    border-radius: 10px;
+  }
+
+  .nav-button span {
+    font-size: 11px;
   }
 
   #wallet-balance-total {
@@ -864,7 +1082,8 @@ button:active {
   }
 
   .savings-goal-buttons {
-    grid-template-columns: 1fr;
+    grid-template-columns:
+      1fr;
   }
 
   .chore-setting-item {
@@ -910,6 +1129,8 @@ button:active {
   }
 
   .edit-modal-buttons {
-    grid-template-columns: 1fr;
+    grid-template-columns:
+      1fr;
   }
+
 }

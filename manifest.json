@@ -10,13 +10,13 @@
   "lang": "ja",
   "icons": [
     {
-      "src": "./icon.svg?v=0.11.0",
+      "src": "./icon.svg?v=0.12.0",
       "sizes": "any",
       "type": "image/svg+xml",
       "purpose": "any"
     },
     {
-      "src": "./icon.svg?v=0.11.0",
+      "src": "./icon.svg?v=0.12.0",
       "sizes": "any",
       "type": "image/svg+xml",
       "purpose": "maskable"

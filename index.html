@@ -18,12 +18,12 @@
 
   <link
     rel="stylesheet"
-    href="./style.css?v=0.11.0"
+    href="./style.css?v=0.12.0"
   >
 
   <link
     rel="manifest"
-    href="./manifest.json?v=0.11.0"
+    href="./manifest.json?v=0.12.0"
   >
 </head>
 
@@ -34,380 +34,533 @@
     <h1>おこづかいメモ</h1>
 
     <p class="app-version">
-      Ver. 0.11.0 ｜ 2026/08/15
+      Ver. 0.12.0 ｜ 2026/08/15
     </p>
 
-    <section class="wallet-balance">
+    <!-- 画面切り替え -->
+    <nav class="main-nav">
 
-      <p>いま持っているお金</p>
+      <button
+        class="nav-button active"
+        data-page="home"
+        type="button"
+      >
+        🏠
+        <span>ホーム</span>
+      </button>
 
-      <strong id="wallet-balance-total">
-        0円
-      </strong>
+      <button
+        class="nav-button"
+        data-page="record"
+        type="button"
+      >
+        ✏️
+        <span>記録する</span>
+      </button>
 
-    </section>
+      <button
+        class="nav-button"
+        data-page="settings"
+        type="button"
+      >
+        ⚙️
+        <span>設定</span>
+      </button>
 
-    <section class="savings-goal">
+      <button
+        class="nav-button"
+        data-page="data"
+        type="button"
+      >
+        💾
+        <span>データ</span>
+      </button>
 
-      <h2>貯金目標 🎯</h2>
+    </nav>
 
-      <div class="savings-status">
 
-        <p
-          id="savings-goal-title"
-          class="savings-goal-title"
-        >
-          目標を設定してみよう
+    <!-- ===================== -->
+    <!-- ホーム -->
+    <!-- ===================== -->
+
+    <div
+      id="page-home"
+      class="app-page active"
+    >
+
+      <section class="wallet-balance">
+
+        <p>
+          いま持っているお金
         </p>
 
-        <div class="savings-amount-display">
+        <strong id="wallet-balance-total">
+          0円
+        </strong>
 
-          <strong id="savings-saved-amount">
+      </section>
+
+
+      <section class="month-area">
+
+        <label for="month-select">
+          表示する月
+        </label>
+
+        <input
+          id="month-select"
+          type="month"
+        >
+
+      </section>
+
+
+      <section class="summary">
+
+        <h2 id="summary-title">
+          今月のまとめ
+        </h2>
+
+        <p>
+          もらった金額：
+          <strong id="received-total">
             0円
           </strong>
-
-          <span> / </span>
-
-          <span id="savings-target-amount">
-            0円
-          </span>
-
-        </div>
-
-        <div class="savings-bar-area">
-
-          <div
-            id="savings-progress-bar"
-            class="savings-progress-bar"
-          >
-          </div>
-
-        </div>
-
-        <p
-          id="savings-progress-text"
-          class="savings-progress-text"
-        >
-          「貯金」で記録するとここにたまります
         </p>
 
-      </div>
+        <p>
+          つかった金額：
+          <strong id="spent-total">
+            0円
+          </strong>
+        </p>
 
-      <label for="savings-goal-name">
-        何のために貯金する？
-      </label>
+        <p>
+          今月の予算：
+          <strong id="budget-total">
+            0円
+          </strong>
+        </p>
 
-      <input
-        id="savings-goal-name"
-        type="text"
-        placeholder="例：ゲーム"
-      >
+        <p>
+          あと使える金額：
+          <strong id="remaining-budget-total">
+            0円
+          </strong>
+        </p>
 
-      <label for="savings-goal-amount">
-        目標金額
-      </label>
+        <p
+          id="budget-message"
+          class="budget-message"
+        >
+          予算を設定してみよう
+        </p>
 
-      <input
-        id="savings-goal-amount"
-        type="number"
-        min="1"
-        placeholder="例：5000"
-      >
+        <p>
+          のこり：
+          <strong id="balance-total">
+            0円
+          </strong>
+        </p>
 
-      <div class="savings-goal-buttons">
+      </section>
 
-        <button id="save-savings-goal-button">
-          目標を保存する
+
+      <section class="savings-goal">
+
+        <h2>
+          貯金目標 🎯
+        </h2>
+
+        <div class="savings-status">
+
+          <p
+            id="savings-goal-title"
+            class="savings-goal-title"
+          >
+            目標を設定してみよう
+          </p>
+
+          <div class="savings-amount-display">
+
+            <strong id="savings-saved-amount">
+              0円
+            </strong>
+
+            <span>
+              /
+            </span>
+
+            <span id="savings-target-amount">
+              0円
+            </span>
+
+          </div>
+
+          <div class="savings-bar-area">
+
+            <div
+              id="savings-progress-bar"
+              class="savings-progress-bar"
+            >
+            </div>
+
+          </div>
+
+          <p
+            id="savings-progress-text"
+            class="savings-progress-text"
+          >
+            「貯金」で記録するとここにたまります
+          </p>
+
+        </div>
+
+
+        <label for="savings-goal-name">
+          何のために貯金する？
+        </label>
+
+        <input
+          id="savings-goal-name"
+          type="text"
+          placeholder="例：ゲーム"
+        >
+
+
+        <label for="savings-goal-amount">
+          目標金額
+        </label>
+
+        <input
+          id="savings-goal-amount"
+          type="number"
+          min="1"
+          placeholder="例：5000"
+        >
+
+
+        <div class="savings-goal-buttons">
+
+          <button
+            id="save-savings-goal-button"
+            type="button"
+          >
+            目標を保存する
+          </button>
+
+          <button
+            id="clear-savings-goal-button"
+            type="button"
+          >
+            目標をやめる
+          </button>
+
+        </div>
+
+        <p class="savings-help">
+          使ったお金を記録するときに
+          「貯金」を選ぶと、
+          貯金額として加算されます。
+        </p>
+
+      </section>
+
+
+      <section class="category-summary">
+
+        <h2>
+          カテゴリ別の支出
+        </h2>
+
+        <ul id="category-summary-list">
+        </ul>
+
+      </section>
+
+    </div>
+
+
+    <!-- ===================== -->
+    <!-- 記録する -->
+    <!-- ===================== -->
+
+    <div
+      id="page-record"
+      class="app-page"
+    >
+
+      <section class="input-area">
+
+        <h2>
+          お手伝いを記録する
+        </h2>
+
+        <label for="chore-select">
+          お手伝いした内容
+        </label>
+
+        <select id="chore-select">
+
+          <option value="">
+            お手伝いを選んでください
+          </option>
+
+        </select>
+
+
+        <label for="amount">
+          もらえる金額
+        </label>
+
+        <input
+          id="amount"
+          type="number"
+          readonly
+          placeholder="お手伝いを選ぶと表示されます"
+        >
+
+
+        <label for="chore-date">
+          お手伝いした日
+        </label>
+
+        <input
+          id="chore-date"
+          type="date"
+        >
+
+
+        <button id="record-button">
+          記録する
         </button>
 
-        <button id="clear-savings-goal-button">
-          目標をやめる
+      </section>
+
+
+      <section class="expense-area">
+
+        <h2>
+          使ったお金を記録する
+        </h2>
+
+        <label for="expense-amount">
+          金額
+        </label>
+
+        <input
+          id="expense-amount"
+          type="number"
+          min="1"
+          placeholder="例：120"
+        >
+
+
+        <label for="expense-content">
+          使った内容
+        </label>
+
+        <input
+          id="expense-content"
+          type="text"
+          placeholder="例：ジュース"
+        >
+
+
+        <label for="expense-category">
+          カテゴリ
+        </label>
+
+        <select id="expense-category">
+
+          <option value="">
+            カテゴリを選んでください
+          </option>
+
+          <option value="おかし">
+            おかし
+          </option>
+
+          <option value="文房具">
+            文房具
+          </option>
+
+          <option value="ゲーム">
+            ゲーム
+          </option>
+
+          <option value="貯金">
+            貯金
+          </option>
+
+          <option value="その他">
+            その他
+          </option>
+
+        </select>
+
+
+        <label for="expense-date">
+          使った日
+        </label>
+
+        <input
+          id="expense-date"
+          type="date"
+        >
+
+
+        <button id="expense-button">
+          支出を記録する
         </button>
 
-      </div>
-
-      <p class="savings-help">
-        使ったお金を記録するときに
-        「貯金」を選ぶと、貯金額として加算されます。
-      </p>
-
-    </section>
-
-    <section class="summary">
-
-      <h2 id="summary-title">
-        今月のまとめ
-      </h2>
-
-      <p>
-        もらった金額：
-        <strong id="received-total">
-          0円
-        </strong>
-      </p>
-
-      <p>
-        つかった金額：
-        <strong id="spent-total">
-          0円
-        </strong>
-      </p>
+      </section>
 
-      <p>
-        今月の予算：
-        <strong id="budget-total">
-          0円
-        </strong>
-      </p>
 
-      <p>
-        あと使える金額：
-        <strong id="remaining-budget-total">
-          0円
-        </strong>
-      </p>
+      <section class="records">
 
-      <p
-        id="budget-message"
-        class="budget-message"
-      >
-        予算を設定してみよう
-      </p>
+        <h2>
+          記録一覧
+        </h2>
 
-      <p>
-        のこり：
-        <strong id="balance-total">
-          0円
-        </strong>
-      </p>
+        <ul id="record-list">
+        </ul>
 
-    </section>
+      </section>
 
-    <section class="month-area">
+    </div>
 
-      <label for="month-select">
-        表示する月
-      </label>
 
-      <input
-        id="month-select"
-        type="month"
-      >
+    <!-- ===================== -->
+    <!-- 設定 -->
+    <!-- ===================== -->
 
-    </section>
+    <div
+      id="page-settings"
+      class="app-page"
+    >
 
-    <section class="budget-area">
+      <section class="budget-area">
 
-      <h2>今月の予算設定</h2>
+        <h2>
+          今月の予算設定
+        </h2>
 
-      <label for="budget-amount">
-        今月使ってよい金額
-      </label>
+        <p class="setting-description">
+          ホームで選択している月の
+          予算を設定します。
+        </p>
 
-      <input
-        id="budget-amount"
-        type="number"
-        min="0"
-        placeholder="例：1000"
-      >
+        <label for="budget-amount">
+          使ってよい金額
+        </label>
 
-      <button id="save-budget-button">
-        予算を保存する
-      </button>
+        <input
+          id="budget-amount"
+          type="number"
+          min="0"
+          placeholder="例：1000"
+        >
 
-    </section>
+        <button id="save-budget-button">
+          予算を保存する
+        </button>
 
-    <section class="chore-settings">
+      </section>
 
-      <h2>お手伝い設定</h2>
 
-      <label for="chore-name">
-        お手伝いの名前
-      </label>
+      <section class="chore-settings">
 
-      <input
-        id="chore-name"
-        type="text"
-        placeholder="例：洗たくものをたたむ"
-      >
+        <h2>
+          お手伝い設定
+        </h2>
 
-      <label for="chore-amount">
-        もらえる金額
-      </label>
+        <label for="chore-name">
+          お手伝いの名前
+        </label>
 
-      <input
-        id="chore-amount"
-        type="number"
-        min="1"
-        placeholder="例：80"
-      >
+        <input
+          id="chore-name"
+          type="text"
+          placeholder="例：洗たくものをたたむ"
+        >
 
-      <button id="add-chore-button">
-        お手伝いを追加する
-      </button>
 
-      <ul id="chore-settings-list"></ul>
+        <label for="chore-amount">
+          もらえる金額
+        </label>
 
-    </section>
+        <input
+          id="chore-amount"
+          type="number"
+          min="1"
+          placeholder="例：80"
+        >
 
-    <section class="input-area">
 
-      <h2>お手伝いを記録する</h2>
+        <button id="add-chore-button">
+          お手伝いを追加する
+        </button>
 
-      <label for="chore-select">
-        お手伝いした内容
-      </label>
 
-      <select id="chore-select">
+        <ul id="chore-settings-list">
+        </ul>
 
-        <option value="">
-          お手伝いを選んでください
-        </option>
+      </section>
 
-      </select>
+    </div>
 
-      <label for="amount">
-        もらえる金額
-      </label>
 
-      <input
-        id="amount"
-        type="number"
-        readonly
-        placeholder="お手伝いを選ぶと表示されます"
-      >
+    <!-- ===================== -->
+    <!-- データ -->
+    <!-- ===================== -->
 
-      <label for="chore-date">
-        お手伝いした日
-      </label>
+    <div
+      id="page-data"
+      class="app-page"
+    >
 
-      <input
-        id="chore-date"
-        type="date"
-      >
+      <section class="data-area">
 
-      <button id="record-button">
-        記録する
-      </button>
+        <h2>
+          データ管理
+        </h2>
 
-    </section>
+        <p class="data-description">
+          記録・予算・お手伝い設定・
+          貯金目標をファイルに保存できます。
+        </p>
 
-    <section class="expense-area">
 
-      <h2>使ったお金を記録する</h2>
+        <button id="export-data-button">
+          データを書き出す
+        </button>
 
-      <label for="expense-amount">
-        金額
-      </label>
 
-      <input
-        id="expense-amount"
-        type="number"
-        min="1"
-        placeholder="例：120"
-      >
+        <label
+          for="import-data-input"
+          class="import-data-label"
+        >
+          データを読み込む
+        </label>
 
-      <label for="expense-content">
-        使った内容
-      </label>
 
-      <input
-        id="expense-content"
-        type="text"
-        placeholder="例：ジュース"
-      >
+        <input
+          id="import-data-input"
+          type="file"
+          accept=".json,application/json"
+        >
 
-      <label for="expense-category">
-        カテゴリ
-      </label>
+      </section>
 
-      <select id="expense-category">
-
-        <option value="">
-          カテゴリを選んでください
-        </option>
-
-        <option value="おかし">
-          おかし
-        </option>
-
-        <option value="文房具">
-          文房具
-        </option>
-
-        <option value="ゲーム">
-          ゲーム
-        </option>
-
-        <option value="貯金">
-          貯金
-        </option>
-
-        <option value="その他">
-          その他
-        </option>
-
-      </select>
-
-      <label for="expense-date">
-        使った日
-      </label>
-
-      <input
-        id="expense-date"
-        type="date"
-      >
-
-      <button id="expense-button">
-        支出を記録する
-      </button>
-
-    </section>
-
-    <section class="category-summary">
-
-      <h2>カテゴリ別の支出</h2>
-
-      <ul id="category-summary-list"></ul>
-
-    </section>
-
-    <section class="data-area">
-
-      <h2>データ管理</h2>
-
-      <p class="data-description">
-        記録や設定をファイルに保存できます。
-      </p>
-
-      <button id="export-data-button">
-        データを書き出す
-      </button>
-
-      <label
-        for="import-data-input"
-        class="import-data-label"
-      >
-        データを読み込む
-      </label>
-
-      <input
-        id="import-data-input"
-        type="file"
-        accept=".json,application/json"
-      >
-
-    </section>
-
-    <section class="records">
-
-      <h2>記録一覧</h2>
-
-      <ul id="record-list"></ul>
-
-    </section>
+    </div>
 
   </main>
+
+
+  <!-- ===================== -->
+  <!-- 記録編集画面 -->
+  <!-- ===================== -->
 
   <div
     id="edit-record-modal"
@@ -424,6 +577,7 @@
         記録を編集
       </h2>
 
+
       <label for="edit-record-amount">
         金額
       </label>
@@ -434,6 +588,7 @@
         min="1"
       >
 
+
       <label for="edit-record-content">
         内容
       </label>
@@ -442,6 +597,7 @@
         id="edit-record-content"
         type="text"
       >
+
 
       <div id="edit-category-area">
 
@@ -475,6 +631,7 @@
 
       </div>
 
+
       <label for="edit-record-date">
         日付
       </label>
@@ -483,6 +640,7 @@
         id="edit-record-date"
         type="date"
       >
+
 
       <div class="edit-modal-buttons">
 
@@ -506,21 +664,31 @@
 
   </div>
 
-  <script src="./script.js?v=0.11.0"></script>
+
+  <script src="./script.js?v=0.12.0"></script>
 
   <script>
-    if ("serviceWorker" in navigator) {
+
+    if (
+      "serviceWorker" in navigator
+    ) {
+
       window.addEventListener(
         "load",
         async function () {
+
           try {
+
             const registration =
-              await navigator.serviceWorker.register(
-                "./service-worker.js?v=0.11.0",
-                {
-                  updateViaCache: "none"
-                }
-              );
+              await navigator
+                .serviceWorker
+                .register(
+                  "./service-worker.js?v=0.12.0",
+                  {
+                    updateViaCache:
+                      "none"
+                  }
+                );
 
             registration.update();
 
@@ -532,9 +700,12 @@
             );
 
           }
+
         }
       );
+
     }
+
   </script>
 
 </body>

@@ -1,20 +1,25 @@
 // =====================================
 // おこづかいメモ
 // Service Worker
-// Ver. 0.11.0
+// Ver. 0.12.0
 // =====================================
 
 const CACHE_NAME =
-  "okozukai-cache-v0.11.0";
+  "okozukai-cache-v0.12.0";
 
 const CACHE_FILES = [
   "./",
   "./index.html",
-  "./style.css?v=0.11.0",
-  "./script.js?v=0.11.0",
-  "./manifest.json?v=0.11.0",
-  "./icon.svg?v=0.11.0"
+  "./style.css?v=0.12.0",
+  "./script.js?v=0.12.0",
+  "./manifest.json?v=0.12.0",
+  "./icon.svg?v=0.12.0"
 ];
+
+
+// =====================================
+// インストール
+// =====================================
 
 self.addEventListener(
   "install",
@@ -41,6 +46,11 @@ self.addEventListener(
   }
 );
 
+
+// =====================================
+// 古いキャッシュを削除
+// =====================================
+
 self.addEventListener(
   "activate",
   function (event) {
@@ -49,15 +59,11 @@ self.addEventListener(
       caches
         .keys()
         .then(
-          function (
-            cacheNames
-          ) {
+          function (cacheNames) {
 
             return Promise.all(
               cacheNames.map(
-                function (
-                  cacheName
-                ) {
+                function (cacheName) {
 
                   if (
                     cacheName !==
@@ -83,6 +89,11 @@ self.addEventListener(
   }
 );
 
+
+// =====================================
+// ファイル読み込み
+// =====================================
+
 self.addEventListener(
   "fetch",
   function (event) {
@@ -90,23 +101,36 @@ self.addEventListener(
     const request =
       event.request;
 
+
     if (
-      request.method !== "GET"
+      request.method !==
+      "GET"
     ) {
+
       return;
+
     }
+
 
     const requestUrl =
       new URL(
         request.url
       );
 
+
     if (
       requestUrl.origin !==
       self.location.origin
     ) {
+
       return;
+
     }
+
+
+    // -------------------------
+    // HTMLページ
+    // -------------------------
 
     if (
       request.mode ===
@@ -114,13 +138,12 @@ self.addEventListener(
     ) {
 
       event.respondWith(
+
         fetch(
           request
         )
           .then(
-            function (
-              response
-            ) {
+            function (response) {
 
               return response;
 
@@ -135,46 +158,52 @@ self.addEventListener(
 
             }
           )
+
       );
 
       return;
+
     }
 
+
+    // -------------------------
+    // CSS・JavaScript・画像など
+    // -------------------------
+
     event.respondWith(
+
       fetch(
         request
       )
         .then(
-          function (
-            response
-          ) {
+          function (response) {
 
             if (
               response &&
               response.ok
             ) {
 
-              const copy =
+              const responseCopy =
                 response.clone();
+
 
               caches
                 .open(
                   CACHE_NAME
                 )
                 .then(
-                  function (
-                    cache
-                  ) {
+                  function (cache) {
 
                     cache.put(
                       request,
-                      copy
+                      responseCopy
                     );
 
                   }
                 );
 
             }
+
 
             return response;
 
@@ -189,6 +218,7 @@ self.addEventListener(
 
           }
         )
+
     );
 
   }
