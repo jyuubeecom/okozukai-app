@@ -8,256 +8,282 @@
     content="width=device-width, initial-scale=1.0"
   >
 
+  <meta
+    name="theme-color"
+    content="#ef9b32"
+  >
+
   <title>おこづかいメモ</title>
 
-  <link rel="stylesheet" href="style.css">
+  <link
+    rel="stylesheet"
+    href="style.css"
+  >
+
+  <link
+    rel="manifest"
+    href="manifest.json"
+  >
 </head>
 
 <body>
   <main class="app">
-<h1>おこづかいメモ</h1>
+    <h1>おこづかいメモ</h1>
 
-<section class="wallet-balance">
-  <p>いま持っているお金</p>
+    <section class="wallet-balance">
+      <p>いま持っているお金</p>
 
-  <strong id="wallet-balance-total">
-    0円
-  </strong>
-</section>
+      <strong id="wallet-balance-total">
+        0円
+      </strong>
+    </section>
 
-<section class="summary">
-  <h2 id="summary-title">今月のまとめ</h2>
+    <section class="summary">
+      <h2 id="summary-title">
+        今月のまとめ
+      </h2>
 
-  <p>
-    もらった金額：
-    <strong id="received-total">0円</strong>
-  </p>
+      <p>
+        もらった金額：
+        <strong id="received-total">
+          0円
+        </strong>
+      </p>
 
-  <p>
-    つかった金額：
-    <strong id="spent-total">0円</strong>
-  </p>
+      <p>
+        つかった金額：
+        <strong id="spent-total">
+          0円
+        </strong>
+      </p>
 
-  <p>
-  今月の予算：
-  <strong id="budget-total">0円</strong>
-</p>
+      <p>
+        今月の予算：
+        <strong id="budget-total">
+          0円
+        </strong>
+      </p>
 
-<p>
-  あと使える金額：
-  <strong id="remaining-budget-total">0円</strong>
-</p>
+      <p>
+        あと使える金額：
+        <strong id="remaining-budget-total">
+          0円
+        </strong>
+      </p>
 
-<p
-  id="budget-message"
-  class="budget-message"
->
-  予算を設定してみよう
-</p>
+      <p
+        id="budget-message"
+        class="budget-message"
+      >
+        予算を設定してみよう
+      </p>
 
-  <p>
-    のこり：
-    <strong id="balance-total">0円</strong>
-  </p>
-</section>
-<section class="month-area">
-  <label for="month-select">
-    表示する月
-  </label>
+      <p>
+        のこり：
+        <strong id="balance-total">
+          0円
+        </strong>
+      </p>
+    </section>
 
-  <input
-    id="month-select"
-    type="month"
-  >
-</section>
+    <section class="month-area">
+      <label for="month-select">
+        表示する月
+      </label>
 
-<section class="budget-area">
-  <h2>今月の予算設定</h2>
+      <input
+        id="month-select"
+        type="month"
+      >
+    </section>
 
-  <label for="budget-amount">
-    今月使ってよい金額
-  </label>
+    <section class="budget-area">
+      <h2>今月の予算設定</h2>
 
-  <input
-    id="budget-amount"
-    type="number"
-    min="0"
-    placeholder="例：1000"
-  >
+      <label for="budget-amount">
+        今月使ってよい金額
+      </label>
 
-  <button id="save-budget-button">
-    予算を保存する
-  </button>
-</section>
+      <input
+        id="budget-amount"
+        type="number"
+        min="0"
+        placeholder="例：1000"
+      >
 
-<section class="chore-settings">
-  <h2>お手伝い設定</h2>
+      <button id="save-budget-button">
+        予算を保存する
+      </button>
+    </section>
 
-  <label for="chore-name">
-    お手伝いの名前
-  </label>
+    <section class="chore-settings">
+      <h2>お手伝い設定</h2>
 
-  <input
-    id="chore-name"
-    type="text"
-    placeholder="例：洗たくものをたたむ"
-  >
+      <label for="chore-name">
+        お手伝いの名前
+      </label>
 
-  <label for="chore-amount">
-    もらえる金額
-  </label>
+      <input
+        id="chore-name"
+        type="text"
+        placeholder="例：洗たくものをたたむ"
+      >
 
-  <input
-    id="chore-amount"
-    type="number"
-    min="1"
-    placeholder="例：80"
-  >
+      <label for="chore-amount">
+        もらえる金額
+      </label>
 
-  <button id="add-chore-button">
-    お手伝いを追加する
-  </button>
+      <input
+        id="chore-amount"
+        type="number"
+        min="1"
+        placeholder="例：80"
+      >
 
-  <ul id="chore-settings-list"></ul>
-</section>
+      <button id="add-chore-button">
+        お手伝いを追加する
+      </button>
 
-<section class="input-area">
-  <h2>お手伝いを記録する</h2>
+      <ul id="chore-settings-list"></ul>
+    </section>
 
-  <label for="chore-select">
-    お手伝いした内容
-  </label>
+    <section class="input-area">
+      <h2>お手伝いを記録する</h2>
 
-  <select id="chore-select">
-    <option value="">
-      お手伝いを選んでください
-    </option>
-  </select>
+      <label for="chore-select">
+        お手伝いした内容
+      </label>
 
-  <label for="amount">
-    もらえる金額
-  </label>
+      <select id="chore-select">
+        <option value="">
+          お手伝いを選んでください
+        </option>
+      </select>
 
-  <input
-    id="amount"
-    type="number"
-    readonly
-    placeholder="お手伝いを選ぶと表示されます"
-  >
+      <label for="amount">
+        もらえる金額
+      </label>
 
-  <label for="chore-date">
-    お手伝いした日
-  </label>
+      <input
+        id="amount"
+        type="number"
+        readonly
+        placeholder="お手伝いを選ぶと表示されます"
+      >
 
-  <input
-    id="chore-date"
-    type="date"
-  >
+      <label for="chore-date">
+        お手伝いした日
+      </label>
 
-  <button id="record-button">
-    記録する
-  </button>
-</section>
+      <input
+        id="chore-date"
+        type="date"
+      >
 
-<section class="expense-area">
-  <h2>使ったお金を記録する</h2>
+      <button id="record-button">
+        記録する
+      </button>
+    </section>
 
-  <label for="expense-amount">
-    金額
-  </label>
+    <section class="expense-area">
+      <h2>使ったお金を記録する</h2>
 
-  <input
-    id="expense-amount"
-    type="number"
-    min="1"
-    placeholder="例：120"
-  >
+      <label for="expense-amount">
+        金額
+      </label>
 
-  <label for="expense-content">
-    使った内容
-  </label>
+      <input
+        id="expense-amount"
+        type="number"
+        min="1"
+        placeholder="例：120"
+      >
 
-  <input
-    id="expense-content"
-    type="text"
-    placeholder="例：ジュース"
-  >
+      <label for="expense-content">
+        使った内容
+      </label>
 
-  <label for="expense-category">
-  カテゴリ
-</label>
+      <input
+        id="expense-content"
+        type="text"
+        placeholder="例：ジュース"
+      >
 
-<select id="expense-category">
-  <option value="">
-    カテゴリを選んでください
-  </option>
+      <label for="expense-category">
+        カテゴリ
+      </label>
 
-  <option value="おかし">
-    おかし
-  </option>
+      <select id="expense-category">
+        <option value="">
+          カテゴリを選んでください
+        </option>
 
-  <option value="文房具">
-    文房具
-  </option>
+        <option value="おかし">
+          おかし
+        </option>
 
-  <option value="ゲーム">
-    ゲーム
-  </option>
+        <option value="文房具">
+          文房具
+        </option>
 
-  <option value="貯金">
-    貯金
-  </option>
+        <option value="ゲーム">
+          ゲーム
+        </option>
 
-  <option value="その他">
-    その他
-  </option>
-</select>
+        <option value="貯金">
+          貯金
+        </option>
 
-  <label for="expense-date">
-    使った日
-  </label>
+        <option value="その他">
+          その他
+        </option>
+      </select>
 
-  <input
-    id="expense-date"
-    type="date"
-  >
+      <label for="expense-date">
+        使った日
+      </label>
 
-  <button id="expense-button">
-    支出を記録する
-  </button>
-</section>
+      <input
+        id="expense-date"
+        type="date"
+      >
 
-<section class="category-summary">
-  <h2>カテゴリ別の支出</h2>
+      <button id="expense-button">
+        支出を記録する
+      </button>
+    </section>
 
-  <ul id="category-summary-list">
-  </ul>
-</section>
+    <section class="category-summary">
+      <h2>カテゴリ別の支出</h2>
 
-<section class="data-area">
-  <h2>データ管理</h2>
+      <ul id="category-summary-list">
+      </ul>
+    </section>
 
-  <p class="data-description">
-    記録や設定をファイルに保存できます。
-  </p>
+    <section class="data-area">
+      <h2>データ管理</h2>
 
-  <button id="export-data-button">
-    データを書き出す
-  </button>
+      <p class="data-description">
+        記録や設定をファイルに保存できます。
+      </p>
 
-  <label
-    for="import-data-input"
-    class="import-data-label"
-  >
-    データを読み込む
-  </label>
+      <button id="export-data-button">
+        データを書き出す
+      </button>
 
-  <input
-    id="import-data-input"
-    type="file"
-    accept=".json,application/json"
-  >
-</section>
+      <label
+        for="import-data-input"
+        class="import-data-label"
+      >
+        データを読み込む
+      </label>
+
+      <input
+        id="import-data-input"
+        type="file"
+        accept=".json,application/json"
+      >
+    </section>
 
     <section class="records">
       <h2>記録一覧</h2>

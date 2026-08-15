@@ -1,0 +1,64 @@
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="512"
+  height="512"
+  viewBox="0 0 512 512"
+>
+  <rect
+    width="512"
+    height="512"
+    rx="110"
+    fill="#ef9b32"
+  />
+
+  <circle
+    cx="256"
+    cy="256"
+    r="170"
+    fill="#fff8e8"
+  />
+
+  <rect
+    x="125"
+    y="185"
+    width="262"
+    height="180"
+    rx="35"
+    fill="#7257c7"
+  />
+
+  <rect
+    x="285"
+    y="230"
+    width="125"
+    height="90"
+    rx="25"
+    fill="#5682c5"
+  />
+
+  <circle
+    cx="325"
+    cy="275"
+    r="13"
+    fill="#ffffff"
+  />
+
+  <circle
+    cx="220"
+    cy="150"
+    r="68"
+    fill="#ffd85a"
+  />
+
+  <text
+    x="220"
+    y="177"
+    text-anchor="middle"
+    font-size="78"
+    font-family="Arial, sans-serif"
+    font-weight="bold"
+    fill="#9c6511"
+  >
+    ¥
+  </text>
+</svg>
